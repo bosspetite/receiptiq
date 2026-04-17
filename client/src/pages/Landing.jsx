@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { IntroOverlay } from "../components/IntroOverlay";
 import { MarketingShell } from "../components/MarketingShell";
 import { useAuth } from "../hooks/useAuth";
+import heroImage from "../assets/hero.png";
 
 const highlights = [
     { label: "Review-first extraction", value: "Human approved" },
@@ -24,6 +25,12 @@ const stories = [
         title: "For personal clarity",
         body: "Understand what happened, what it cost, and where it belongs in one glance.",
     },
+];
+
+const heroNotes = [
+    "Upload the receipt image",
+    "Review the extracted fields",
+    "Save and watch the dashboard update",
 ];
 
 export function Landing() {
@@ -52,11 +59,11 @@ export function Landing() {
 
             gsap.from("[data-ri-hero-art]", {
                 opacity: 0,
-                scale: 0.94,
-                rotate: -2,
-                duration: 1,
+                scale: 0.96,
+                y: 18,
+                duration: 0.95,
                 ease: "power3.out",
-                delay: 0.15,
+                delay: 0.12,
             });
 
             gsap.from("[data-ri-story-card]", {
@@ -123,11 +130,28 @@ export function Landing() {
                             </div>
                         </div>
                         <div data-ri-hero-art className="ri-surface ri-surface-pad">
-                            <img
-                                src="/hero-mosaic.svg"
-                                alt="ReceiptIQ dashboard and workflow preview"
-                                className="w-full rounded-[1.8rem] border border-white/10 bg-slate-950/35 p-3"
-                            />
+                            <div className="ri-hero-frame">
+                                <div className="ri-hero-orb" />
+                                <div className="ri-hero-glass-card">
+                                    <img
+                                        src={heroImage}
+                                        alt="ReceiptIQ visual identity artwork"
+                                        className="ri-hero-graphic"
+                                    />
+                                </div>
+                                <div className="ri-hero-preview">
+                                    <img
+                                        src="/hero-mosaic.svg"
+                                        alt="ReceiptIQ dashboard and workflow preview"
+                                        className="w-full rounded-[1.55rem] border border-white/10 bg-slate-950/35 p-3"
+                                    />
+                                </div>
+                                <div className="ri-hero-caption">
+                                    {heroNotes.map((note) => (
+                                        <p key={note}>{note}</p>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

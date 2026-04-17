@@ -141,6 +141,53 @@ body::after {
     @apply p-6 sm:p-7;
   }
 
+  .ri-hero-frame {
+    @apply relative overflow-hidden rounded-[1.8rem] border p-4;
+    min-height: 520px;
+    border-color: rgba(154, 171, 196, 0.12);
+    background:
+      radial-gradient(circle at 18% 16%, rgba(72, 204, 191, 0.12), transparent 18%),
+      radial-gradient(circle at 82% 14%, rgba(245, 185, 66, 0.12), transparent 18%),
+      linear-gradient(180deg, rgba(7, 15, 30, 0.96), rgba(10, 19, 35, 0.86));
+  }
+
+  .ri-hero-orb {
+    @apply pointer-events-none absolute h-44 w-44 rounded-full blur-3xl;
+    left: -2rem;
+    top: 2rem;
+    background: rgba(72, 204, 191, 0.16);
+  }
+
+  .ri-hero-glass-card {
+    @apply absolute left-8 top-8 flex items-center justify-center rounded-[1.7rem] border;
+    width: 40%;
+    height: 44%;
+    border-color: rgba(154, 171, 196, 0.12);
+    background: linear-gradient(180deg, rgba(18, 31, 57, 0.72), rgba(12, 22, 41, 0.42));
+    backdrop-filter: blur(14px);
+    transform: rotate(-8deg);
+    box-shadow: 0 20px 60px rgba(2, 8, 23, 0.24);
+  }
+
+  .ri-hero-graphic {
+    @apply max-h-[78%] w-auto object-contain opacity-95;
+    filter: drop-shadow(0 24px 50px rgba(99, 102, 241, 0.24));
+  }
+
+  .ri-hero-preview {
+    @apply absolute right-5 top-7 w-[78%] rounded-[1.8rem] border p-3;
+    border-color: rgba(154, 171, 196, 0.12);
+    background: rgba(15, 28, 50, 0.72);
+    box-shadow: 0 22px 70px rgba(2, 8, 23, 0.34);
+  }
+
+  .ri-hero-caption {
+    @apply absolute bottom-5 left-5 right-5 grid gap-3 rounded-[1.4rem] border px-4 py-3 text-sm leading-6 text-slate-300 sm:grid-cols-3;
+    border-color: rgba(154, 171, 196, 0.12);
+    background: rgba(7, 15, 30, 0.68);
+    backdrop-filter: blur(12px);
+  }
+
   .ri-grid-accent {
     @apply relative overflow-hidden;
   }
@@ -327,5 +374,44 @@ body::after {
 
   .ri-legal-prose li::marker {
     color: rgba(72, 204, 191, 0.9);
+  }
+}
+
+@media (max-width: 1023px) {
+  .ri-hero-frame {
+    min-height: 460px;
+  }
+
+  .ri-hero-glass-card {
+    width: 42%;
+    height: 38%;
+  }
+
+  .ri-hero-preview {
+    width: 82%;
+  }
+}
+
+@media (max-width: 639px) {
+  .ri-hero-frame {
+    min-height: 420px;
+    @apply p-3;
+  }
+
+  .ri-hero-glass-card {
+    left: 1rem;
+    top: 1rem;
+    width: 46%;
+    height: 32%;
+  }
+
+  .ri-hero-preview {
+    right: 0.75rem;
+    top: 0.75rem;
+    width: 86%;
+  }
+
+  .ri-hero-caption {
+    @apply left-3 right-3 bottom-3 grid-cols-1 text-xs;
   }
 }

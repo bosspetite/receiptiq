@@ -42,7 +42,10 @@ export function MarketingShell({ children }) {
                         ))}
                     </nav>
                     <div className="flex items-center gap-2">
-                        <Link to={secondaryHref} className="ri-btn-ghost hidden sm:inline-flex">
+                        <Link
+                            to={secondaryHref}
+                            className="ri-btn-ghost hidden sm:inline-flex"
+                        >
                             {session ? "Dashboard" : "Sign in"}
                         </Link>
                         <Link to={primaryHref} className="ri-btn-primary">

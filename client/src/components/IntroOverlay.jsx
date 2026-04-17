@@ -33,25 +33,31 @@ export function IntroOverlay() {
 
             tl.fromTo(
                 "[data-ri-intro-panel]",
-                { scale: 0.94, opacity: 0, y: 28 },
+                { scale: 0.96, opacity: 0, y: 24 },
                 { scale: 1, opacity: 1, y: 0, duration: 0.7 },
             )
+                .fromTo(
+                    "[data-ri-intro-glow]",
+                    { opacity: 0, scale: 0.85 },
+                    { opacity: 1, scale: 1, duration: 0.65, stagger: 0.06 },
+                    0.06,
+                )
                 .fromTo(
                     "[data-ri-intro-line]",
                     { yPercent: 100, opacity: 0 },
                     { yPercent: 0, opacity: 1, duration: 0.6, stagger: 0.08 },
-                    0.1,
+                    0.12,
                 )
                 .fromTo(
                     "[data-ri-intro-badge]",
-                    { opacity: 0, scale: 0.85 },
+                    { opacity: 0, scale: 0.88 },
                     { opacity: 1, scale: 1, duration: 0.45, stagger: 0.06 },
-                    0.25,
+                    0.22,
                 )
                 .to(rootRef.current, {
                     opacity: 0,
                     duration: 0.45,
-                    delay: 0.5,
+                    delay: 0.6,
                 });
         }, rootRef);
 
@@ -67,9 +73,16 @@ export function IntroOverlay() {
         >
             <div
                 data-ri-intro-panel
-                className="relative w-full max-w-3xl overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-950/85 px-8 py-14 shadow-[0_30px_120px_rgba(0,0,0,0.45)]"
+                className="relative w-full max-w-3xl overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-950/88 px-8 py-14 shadow-[0_30px_120px_rgba(0,0,0,0.45)]"
             >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(72,204,191,0.22),transparent_24%),radial-gradient(circle_at_80%_15%,rgba(245,185,66,0.18),transparent_20%)]" />
+                <div
+                    data-ri-intro-glow
+                    className="absolute -left-10 top-0 h-52 w-52 rounded-full bg-teal-300/15 blur-3xl"
+                />
+                <div
+                    data-ri-intro-glow
+                    className="absolute right-0 top-10 h-44 w-44 rounded-full bg-amber-300/12 blur-3xl"
+                />
                 <div className="relative space-y-8">
                     <div className="flex flex-wrap gap-3">
                         <span data-ri-intro-badge className="ri-badge-accent">
