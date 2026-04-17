@@ -1,0 +1,26 @@
+{
+  "name": "receiptiq",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AI-powered receipt and expense tracker",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "install-all": "npm install",
+    "dev": "concurrently -k -n api,web -c cyan,magenta \"npm run dev --workspace=receiptiq-server\" \"npm run dev --workspace=receiptiq-client\"",
+    "dev:all": "npm run dev",
+    "dev:client": "npm run dev --workspace=receiptiq-client",
+    "dev:server": "npm run dev --workspace=receiptiq-server",
+    "build": "npm run build --workspace=receiptiq-client",
+    "start:server": "npm start --workspace=receiptiq-server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "overrides": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}

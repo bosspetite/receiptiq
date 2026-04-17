@@ -1,0 +1,25 @@
+================================================================================
+  ONE TERMINAL — frontend + backend together
+================================================================================
+
+  Open PowerShell in THIS folder (receiptiq — you should see "client" and "server").
+
+  First time (or after pulling changes):
+
+    npm install
+
+    (Same thing as: npm run install-all)
+
+  Every time you want to work:
+
+    npm run dev
+
+    (Same thing as: npm run dev:all)
+
+  Then open:  http://localhost:5173/
+
+  API check:   http://localhost:5000/api/health
+
+  Stop both:   press Ctrl+C once (concurrently stops api + web together)
+
+================================================================================

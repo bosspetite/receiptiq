@@ -1,0 +1,59 @@
+================================================================================
+  Fix: "VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY is missing"
+================================================================================
+
+1) Create a Supabase project at https://supabase.com (free tier is fine).
+
+2) In Supabase: Project Settings (gear) → API
+
+   - "Project URL"     → copy into VITE_SUPABASE_URL
+   - "anon public" key → copy into VITE_SUPABASE_ANON_KEY
+
+3) On your PC, in the client folder, create a file named exactly:
+
+      client\.env
+
+   (same folder as package.json inside "client")
+
+4) Put this in client\.env (use YOUR values, no quotes needed):
+
+      VITE_SUPABASE_URL=https://xxxx.supabase.co
+      VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+   Tip: copy client\.env.example to .env and replace the placeholders.
+
+5) STOP the dev server (Ctrl+C) and run again:
+
+      npm run dev
+
+   Vite only reads .env when it starts — a restart is required.
+
+6) Run the SQL from README (or supabase/schema.sql) in Supabase SQL Editor.
+
+   That script does all of this:
+   - creates the "expenses" table if it is missing
+   - adds missing columns for older setups
+   - enables Row Level Security (RLS)
+   - creates policies so each signed-in user only sees and edits their own rows
+
+   After running it, open Table Editor -> expenses and confirm:
+   - the table exists
+   - RLS is enabled
+   - policies exist for select / insert / update / delete
+
+================================================================================
+  Fix: "Invalid hook call" / useRef null (duplicate React)
+================================================================================
+
+From the project ROOT (receiptiq folder):
+
+      npm install
+
+This applies npm "overrides" so only one React version is used. Then restart:
+
+      npm run dev
+
+If it still happens, delete client\node_modules and the root node_modules,
+then from root run npm install again.
+
+================================================================================
