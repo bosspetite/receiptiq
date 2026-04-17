@@ -4,17 +4,17 @@ const contactCards = [
     {
         label: "Support",
         value: "support@receiptiq.com",
-        note: "Best for bug reports, product questions, and account help.",
+        note: "Best for bug reports, privacy requests, product questions, and account help.",
     },
     {
-        label: "Partnerships",
-        value: "partners@receiptiq.com",
-        note: "For integrations, demos, and collaboration requests.",
+        label: "Business",
+        value: "hello@receiptiq.com",
+        note: "For partnerships, demos, business enquiries, and general communication.",
     },
     {
-        label: "Press",
-        value: "press@receiptiq.com",
-        note: "For interviews, screenshots, and media requests.",
+        label: "Phone",
+        value: "+234 811 207 5017",
+        note: "For direct enquiries during working hours in Nigeria.",
     },
 ];
 
@@ -30,11 +30,10 @@ export function Contact() {
                                 Reach the team behind ReceiptIQ.
                             </h1>
                             <p className="ri-subtitle">
-                                This page is now structured like a real company
-                                contact page. When you send your actual support
-                                email, phone, address, socials, or founder info,
-                                I can swap these placeholders for your real
-                                details in one pass.
+                                ReceiptIQ is based in Ibadan, Oyo State, Nigeria
+                                and is built by Bassey Emmanuel Obeys under
+                                Petite Media Co. Reach out for product support,
+                                partnerships, or general business enquiries.
                             </p>
                         </div>
                         <div className="ri-surface ri-surface-pad">
@@ -53,10 +52,10 @@ export function Contact() {
                                     </div>
                                     <div className="ri-surface-inner p-4">
                                         <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
-                                            Partnerships
+                                            Business
                                         </p>
                                         <p className="mt-3 text-lg font-bold text-white">
-                                            Within 3 business days
+                                            Within 2 business days
                                         </p>
                                     </div>
                                     <div className="ri-surface-inner p-4">
@@ -64,7 +63,7 @@ export function Contact() {
                                             Status
                                         </p>
                                         <p className="mt-3 text-lg font-bold text-white">
-                                            Monitored daily
+                                            Monitored weekly
                                         </p>
                                     </div>
                                 </div>
@@ -85,6 +84,44 @@ export function Contact() {
                             </p>
                         </article>
                     ))}
+                </section>
+
+                <section className="mt-10 grid gap-6 lg:grid-cols-[1.1fr,0.9fr]">
+                    <article className="ri-surface ri-surface-pad">
+                        <p className="ri-kicker">Founder</p>
+                        <h2 className="mt-4 text-2xl font-bold text-white">
+                            Bassey Emmanuel Obeys
+                        </h2>
+                        <p className="mt-2 text-sm text-slate-400">
+                            Founder & Full-Stack Developer
+                        </p>
+                        <p className="mt-4 text-sm leading-7 text-slate-300">
+                            Bassey Emmanuel Obeys is a freelance web developer and
+                            digital entrepreneur based in Ibadan, Nigeria.
+                            Operating under Petite Media Co., he builds practical
+                            digital tools for small businesses and freelancers
+                            across Nigeria. ReceiptIQ was born from a real need:
+                            helping local business owners stop losing track of
+                            expenses and start making smarter financial decisions.
+                        </p>
+                    </article>
+                    <article className="ri-surface ri-surface-pad">
+                        <p className="ri-kicker">Public links</p>
+                        <div className="mt-4 grid gap-3 text-sm text-slate-300">
+                            <a href="https://github.com/bosspetite" target="_blank" rel="noreferrer" className="hover:text-white">
+                                GitHub
+                            </a>
+                            <a href="https://linkedin.com/in/bassey-emmanuel-obeys-2a69663b4" target="_blank" rel="noreferrer" className="hover:text-white">
+                                LinkedIn
+                            </a>
+                            <a href="https://x.com/BasseyObey15213" target="_blank" rel="noreferrer" className="hover:text-white">
+                                X
+                            </a>
+                            <a href="https://instagram.com/BasseyObeys" target="_blank" rel="noreferrer" className="hover:text-white">
+                                Instagram
+                            </a>
+                        </div>
+                    </article>
                 </section>
             </main>
         </MarketingShell>

@@ -28,6 +28,12 @@ export function Terms() {
             title="Terms of Service"
             summary="These terms explain how users may access and use ReceiptIQ, what responsibilities apply to uploaded content, and the limits of the service."
         >
+            <h2>Company information</h2>
+            <p>
+                ReceiptIQ is operated from Nigeria under the public brand name
+                ReceiptIQ. Questions about these terms may be sent to
+                support@receiptiq.com.
+            </p>
             <h2>Using the service</h2>
             <p>
                 ReceiptIQ is designed to help users extract, review, save, and
@@ -61,6 +67,11 @@ export function Terms() {
                 from time to time. We may also update these terms as the product
                 evolves.
             </p>
+            <h2>Contact</h2>
+            <p>
+                For support, account concerns, or legal questions, contact
+                support@receiptiq.com.
+            </p>
         </LegalLayout>
     );
 }
@@ -71,6 +82,12 @@ export function Privacy() {
             title="Privacy Policy"
             summary="This policy describes what information ReceiptIQ processes, why it is processed, and the choices available to users."
         >
+            <h2>Who we are</h2>
+            <p>
+                ReceiptIQ is a Nigeria-based expense tracking product built to
+                help freelancers and small businesses extract and organize receipt
+                data more efficiently.
+            </p>
             <h2>Information we process</h2>
             <ul>
                 <li>Account details such as email address and Supabase user ID.</li>
@@ -101,8 +118,13 @@ export function Privacy() {
             <h2>User choices</h2>
             <p>
                 Users can review, update, or delete their own expense entries
-                through the application. If you need broader data access or
-                deletion support, contact the team using the contact page.
+                through the application. Users may also request broader data
+                access or deletion by emailing support@receiptiq.com.
+            </p>
+            <h2>Privacy requests</h2>
+            <p>
+                Questions about privacy, data access, or deletion requests can
+                be sent to support@receiptiq.com.
             </p>
         </LegalLayout>
     );

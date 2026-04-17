@@ -73,7 +73,7 @@ export function IntroOverlay() {
         >
             <div
                 data-ri-intro-panel
-                className="relative w-full max-w-3xl overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-950/88 px-8 py-14 shadow-[0_30px_120px_rgba(0,0,0,0.45)]"
+                className="relative w-full max-w-3xl overflow-hidden rounded-[1.4rem] border border-white/10 bg-slate-950/88 px-8 py-14 shadow-[0_24px_90px_rgba(0,0,0,0.38)]"
             >
                 <div
                     data-ri-intro-glow
@@ -86,7 +86,7 @@ export function IntroOverlay() {
                 <div className="relative space-y-8">
                     <div className="flex flex-wrap gap-3">
                         <span data-ri-intro-badge className="ri-badge-accent">
-                            AI expense intelligence
+                            Scan. Track. Save.
                         </span>
                         <span data-ri-intro-badge className="ri-badge">
                             Review-first workflow
@@ -103,14 +103,14 @@ export function IntroOverlay() {
                             data-ri-intro-line
                             className="max-w-2xl text-4xl font-bold leading-tight text-white sm:text-6xl"
                         >
-                            Turn receipt chaos into a calm operating system.
+                            Keep expense tracking clean from the first receipt.
                         </h1>
                         <p
                             data-ri-intro-line
                             className="max-w-xl text-base leading-7 text-slate-300 sm:text-lg"
                         >
-                            Extract, review, save, and understand every expense
-                            in one beautifully focused workflow.
+                            Built for freelancers and small businesses that want
+                            faster records without losing control of the details.
                         </p>
                     </div>
                 </div>

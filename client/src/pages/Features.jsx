@@ -7,7 +7,7 @@ const featureGroups = [
         points: [
             "Upload screenshots, phone photos, and exported images in seconds.",
             "Preview the receipt before extraction so users know exactly what the AI is reading.",
-            "Keep the original workflow simple enough for daily use, not just monthly admin days.",
+            "Keep the workflow simple enough for everyday business use, not just end-of-month cleanup.",
         ],
     },
     {
@@ -21,9 +21,9 @@ const featureGroups = [
     {
         title: "Turn rows into visibility",
         points: [
-            "Dashboard cards show spend, volume, and top categories.",
+            "Dashboard cards show spend, volume, and category activity without overwhelming the page.",
             "Recent expenses and chart views help users see activity right after saving.",
-            "CSV export keeps the app practical for finance workflows and handoff moments.",
+            "The result feels more like a reliable record system than a one-off receipt scanner.",
         ],
     },
 ];
@@ -37,12 +37,12 @@ export function Features() {
                         <div className="space-y-5">
                             <p className="ri-kicker">Features</p>
                             <h1 className="ri-h1 max-w-3xl">
-                                Built to feel practical on day one and polished
-                                enough to trust every week after that.
+                                Practical features for people who need cleaner expense records, fast.
                             </h1>
                             <p className="ri-subtitle max-w-2xl">
-                                ReceiptIQ is designed around the real expense
-                                journey: capture, review, save, and understand.
+                                ReceiptIQ is designed around a simple idea:
+                                scan the receipt, confirm the details, save the
+                                expense, and keep moving.
                             </p>
                             <div className="flex flex-wrap gap-3">
                                 <Link to="/signup" className="ri-btn-primary">
@@ -56,7 +56,7 @@ export function Features() {
                         <img
                             src="/hero-mosaic.svg"
                             alt="ReceiptIQ feature collage"
-                            className="w-full rounded-[2rem] border border-white/10 bg-slate-950/40 p-3"
+                            className="w-full rounded-[1rem] border border-white/10 bg-slate-950/40 p-3"
                         />
                     </div>
                 </section>

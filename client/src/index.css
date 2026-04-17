@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,8 +6,8 @@
 
 :root {
   color-scheme: dark;
-  --ri-font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --ri-font-display: "Space Grotesk", var(--ri-font-sans);
+  --ri-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --ri-font-display: var(--ri-font-sans);
   --ri-bg: #08111f;
   --ri-bg-soft: #0f1b32;
   --ri-panel: rgba(11, 23, 43, 0.8);
@@ -99,7 +99,7 @@ body::after {
     @apply relative overflow-hidden rounded-[2rem] border p-6 sm:p-8;
     background: linear-gradient(145deg, rgba(11, 23, 43, 0.88), rgba(11, 23, 43, 0.68));
     border-color: var(--ri-border);
-    box-shadow: 0 24px 80px rgba(2, 8, 23, 0.42);
+    box-shadow: 0 18px 56px rgba(2, 8, 23, 0.32);
   }
 
   .ri-page-hero::before {
@@ -125,14 +125,14 @@ body::after {
   }
 
   .ri-surface {
-    @apply rounded-[1.6rem] border shadow-[0_16px_60px_rgba(2,8,23,0.34)];
+    @apply rounded-[1.2rem] border shadow-[0_10px_36px_rgba(2,8,23,0.22)];
     background: linear-gradient(180deg, rgba(13, 25, 46, 0.92), rgba(10, 19, 35, 0.85));
     border-color: var(--ri-border);
     backdrop-filter: blur(16px);
   }
 
   .ri-surface-inner {
-    @apply rounded-[1.2rem] border;
+    @apply rounded-[0.95rem] border;
     background: linear-gradient(180deg, rgba(13, 25, 46, 0.72), rgba(8, 17, 31, 0.76));
     border-color: rgba(154, 171, 196, 0.12);
   }
@@ -142,7 +142,7 @@ body::after {
   }
 
   .ri-hero-frame {
-    @apply relative overflow-hidden rounded-[1.8rem] border p-4;
+    @apply relative overflow-hidden rounded-[1.3rem] border p-4;
     min-height: 520px;
     border-color: rgba(154, 171, 196, 0.12);
     background:
@@ -159,7 +159,7 @@ body::after {
   }
 
   .ri-hero-glass-card {
-    @apply absolute left-8 top-8 flex items-center justify-center rounded-[1.7rem] border;
+    @apply absolute left-8 top-8 flex items-center justify-center rounded-[1.2rem] border;
     width: 40%;
     height: 44%;
     border-color: rgba(154, 171, 196, 0.12);
@@ -175,14 +175,14 @@ body::after {
   }
 
   .ri-hero-preview {
-    @apply absolute right-5 top-7 w-[78%] rounded-[1.8rem] border p-3;
+    @apply absolute right-5 top-7 w-[78%] rounded-[1.2rem] border p-3;
     border-color: rgba(154, 171, 196, 0.12);
     background: rgba(15, 28, 50, 0.72);
     box-shadow: 0 22px 70px rgba(2, 8, 23, 0.34);
   }
 
   .ri-hero-caption {
-    @apply absolute bottom-5 left-5 right-5 grid gap-3 rounded-[1.4rem] border px-4 py-3 text-sm leading-6 text-slate-300 sm:grid-cols-3;
+    @apply absolute bottom-5 left-5 right-5 grid gap-3 rounded-[1rem] border px-4 py-3 text-sm leading-6 text-slate-300 sm:grid-cols-3;
     border-color: rgba(154, 171, 196, 0.12);
     background: rgba(7, 15, 30, 0.68);
     backdrop-filter: blur(12px);
@@ -204,7 +204,7 @@ body::after {
   }
 
   .ri-btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition duration-200
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition duration-200
       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950
       disabled:cursor-not-allowed disabled:opacity-60;
   }
@@ -248,7 +248,7 @@ body::after {
   }
 
   .ri-input {
-    @apply mt-2 w-full rounded-2xl border px-4 py-3 text-sm text-slate-100 outline-none transition;
+    @apply mt-2 w-full rounded-xl border px-4 py-3 text-sm text-slate-100 outline-none transition;
     border-color: rgba(154, 171, 196, 0.16);
     background: rgba(7, 15, 30, 0.9);
   }
@@ -273,7 +273,7 @@ body::after {
   }
 
   .ri-badge {
-    @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-300;
+    @apply inline-flex items-center gap-2 rounded-lg border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-300;
     border-color: rgba(154, 171, 196, 0.14);
     background: rgba(8, 17, 31, 0.6);
   }
@@ -285,7 +285,7 @@ body::after {
   }
 
   .ri-table-wrap {
-    @apply overflow-hidden rounded-[1.6rem] border;
+    @apply overflow-hidden rounded-[1rem] border;
     border-color: var(--ri-border);
     background: rgba(11, 23, 43, 0.78);
     box-shadow: 0 18px 60px rgba(2, 8, 23, 0.28);
@@ -322,13 +322,13 @@ body::after {
   }
 
   .ri-callout-warn {
-    @apply rounded-[1.4rem] border p-5 text-amber-100;
+    @apply rounded-[1rem] border p-5 text-amber-100;
     border-color: rgba(245, 185, 66, 0.22);
     background: rgba(120, 53, 15, 0.18);
   }
 
   .ri-callout-danger {
-    @apply rounded-[1.2rem] border p-4 text-sm text-red-100;
+    @apply rounded-[1rem] border p-4 text-sm text-red-100;
     border-color: rgba(248, 113, 113, 0.26);
     background: rgba(127, 29, 29, 0.22);
   }
@@ -338,7 +338,7 @@ body::after {
   }
 
   .ri-stat {
-    @apply rounded-[1.4rem] border p-5;
+    @apply rounded-[1rem] border p-5;
     border-color: rgba(154, 171, 196, 0.12);
     background: rgba(10, 19, 35, 0.64);
   }

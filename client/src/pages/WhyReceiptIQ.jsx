@@ -2,16 +2,16 @@ import { MarketingShell } from "../components/MarketingShell";
 
 const reasons = [
     {
-        title: "It closes the loop",
-        body: "Many receipt tools stop at extraction. ReceiptIQ keeps going until the expense is saved and visible on the dashboard.",
+        title: "It solves a real local problem",
+        body: "ReceiptIQ was created from the everyday reality of freelancers and small business owners who keep receipts but rarely have time to log them properly.",
     },
     {
         title: "It respects review",
-        body: "The interface assumes AI is helpful but not sacred. That gives users confidence to correct fields before they become records.",
+        body: "The interface treats AI as a drafting assistant, not the final authority. Users stay in control before anything is saved.",
     },
     {
-        title: "It feels personal",
-        body: "Supabase auth and RLS keep each user's data private without forcing the app into a heavy enterprise workflow.",
+        title: "It feels credible",
+        body: "The product aims to feel calm, finance-aware, and trustworthy instead of flashy or experimental, which matters when money data is involved.",
     },
 ];
 
@@ -23,12 +23,11 @@ export function WhyReceiptIQ() {
                     <div className="relative space-y-5">
                         <p className="ri-kicker">Why ReceiptIQ</p>
                         <h1 className="ri-h1 max-w-4xl">
-                            Designed for people who want modern automation but
-                            still need clean, believable finance data.
+                            Designed for people who want automation without losing trust in the numbers.
                         </h1>
                         <p className="ri-subtitle max-w-3xl">
-                            The product story is simple: make expense tracking
-                            feel lighter without making it feel risky.
+                            ReceiptIQ is built to make expense tracking lighter,
+                            faster, and more believable for everyday users.
                         </p>
                     </div>
                 </section>

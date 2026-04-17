@@ -4,7 +4,7 @@ import { MarketingShell } from "../components/MarketingShell";
 const steps = [
     {
         title: "Start with a receipt image",
-        body: "The user uploads a clear image from a phone, screenshot, or export. The preview creates confidence before anything runs.",
+        body: "Upload a clear receipt photo, screenshot, or export. The preview helps the user confirm the right file before extraction begins.",
     },
     {
         title: "AI proposes structured fields",
@@ -36,9 +36,9 @@ export function HowItWorks() {
                             into reliable expense records.
                         </h1>
                         <p className="ri-subtitle">
-                            The product is intentionally review-first: AI does
-                            the tedious part, the user confirms accuracy, and
-                            Supabase keeps the data personal.
+                            The workflow is intentionally review-first. AI handles
+                            extraction, the user confirms the details, and the saved
+                            record becomes part of a clean expense history.
                         </p>
                         <div className="flex flex-wrap gap-3">
                             <Link to="/signup" className="ri-btn-primary">
@@ -53,7 +53,7 @@ export function HowItWorks() {
                         <img
                             src="/receipt-stack.svg"
                             alt="ReceiptIQ receipt stack illustration"
-                            className="w-full rounded-[1.6rem] border border-white/10 bg-slate-950/30 p-3"
+                            className="w-full rounded-[1rem] border border-white/10 bg-slate-950/30 p-3"
                         />
                     </div>
                 </section>
@@ -61,7 +61,7 @@ export function HowItWorks() {
                 <section className="mt-12 grid gap-5">
                     {steps.map((step, index) => (
                         <article key={step.title} className="ri-surface ri-surface-pad flex flex-col gap-4 md:flex-row md:items-start">
-                            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-300 to-amber-300 font-display text-xl font-bold text-slate-950">
+                            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-teal-300 to-amber-300 text-xl font-bold text-slate-950">
                                 {index + 1}
                             </div>
                             <div>

@@ -18,7 +18,7 @@ export function Navbar() {
             <div className="ri-container flex flex-wrap items-center justify-between gap-4 py-3">
                 <div className="flex items-center gap-3">
                     <NavLink
-                        to={user ? "/dashboard" : "/"}
+                        to="/"
                         className="flex items-center gap-3 rounded-2xl px-2 py-1"
                     >
                         <span className="flex h-10 w-10 items-center justify-center rounded-2xl border border-teal-300/20 bg-white/5 font-display text-sm font-bold text-teal-200">

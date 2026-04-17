@@ -8,6 +8,13 @@ const navItems = [
     { to: "/contact", label: "Contact" },
 ];
 
+const socials = [
+    { href: "https://github.com/bosspetite", label: "GitHub" },
+    { href: "https://linkedin.com/in/bassey-emmanuel-obeys-2a69663b4", label: "LinkedIn" },
+    { href: "https://x.com/BasseyObey15213", label: "X" },
+    { href: "https://instagram.com/BasseyObeys", label: "Instagram" },
+];
+
 export function MarketingShell({ children }) {
     const { session } = useAuth();
     const primaryHref = session ? "/dashboard" : "/signup";
@@ -60,17 +67,34 @@ export function MarketingShell({ children }) {
             <footer className="border-t border-white/10 bg-slate-950/50 py-12">
                 <div className="ri-container grid gap-8 lg:grid-cols-[1.4fr,1fr,1fr]">
                     <div className="space-y-4">
-                        <p className="font-display text-2xl font-bold text-white">
+                        <p className="text-2xl font-semibold tracking-tight text-white">
                             ReceiptIQ
                         </p>
                         <p className="max-w-md text-sm leading-7 text-slate-400">
-                            A review-first expense platform that helps people
-                            turn receipt images into trusted financial records.
+                            Scan. Track. Save. ReceiptIQ uses AI to extract and
+                            log expense data from receipt photos so freelancers
+                            and small businesses can keep spending records without
+                            manual admin.
                         </p>
-                        <div className="flex flex-wrap gap-2">
-                            <span className="ri-badge-accent">GSAP motion</span>
-                            <span className="ri-badge">Gemini extraction</span>
-                            <span className="ri-badge">Supabase + RLS</span>
+                        <div className="space-y-1 text-sm text-slate-400">
+                            <p>Ibadan, Oyo State, Nigeria</p>
+                            <a href="mailto:hello@receiptiq.com" className="hover:text-white">
+                                hello@receiptiq.com
+                            </a>
+                            <p>+234 811 207 5017</p>
+                        </div>
+                        <div className="flex flex-wrap gap-3 text-sm text-slate-300">
+                            {socials.map((social) => (
+                                <a
+                                    key={social.label}
+                                    href={social.href}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="hover:text-white"
+                                >
+                                    {social.label}
+                                </a>
+                            ))}
                         </div>
                     </div>
                     <div className="space-y-3">
@@ -104,6 +128,10 @@ export function MarketingShell({ children }) {
                                 Terms
                             </Link>
                         </div>
+                        <p className="pt-3 text-sm leading-6 text-slate-400">
+                            Built by Bassey Emmanuel Obeys, founder of ReceiptIQ
+                            and full-stack developer at Petite Media Co.
+                        </p>
                     </div>
                 </div>
             </footer>
