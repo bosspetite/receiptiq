@@ -2,7 +2,6 @@ import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ScanLine, ShieldCheck, Wallet } from "lucide-react";
 import { gsap } from "gsap";
-import { IntroOverlay } from "../components/IntroOverlay";
 import { MarketingShell } from "../components/MarketingShell";
 import { useAuth } from "../hooks/useAuth";
 import heroImage from "../assets/hero.png";
@@ -73,7 +72,6 @@ export function Landing() {
 
     return (
         <MarketingShell>
-            <IntroOverlay />
             <main ref={rootRef}>
                 <section className="ri-container py-10 sm:py-16">
                     <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.05fr),minmax(420px,0.95fr)]">

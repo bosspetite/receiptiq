@@ -145,6 +145,7 @@ export function Dashboard() {
             topCategory: byCategory[0]?.category || "None yet",
             averageSpend: expenseCount > 0 ? totalSpend / expenseCount : 0,
             googleSheetUrl: summary?.googleSheetUrl || null,
+            googleSheetSyncEnabled: Boolean(summary?.googleSheetSyncEnabled),
         };
     }, [summary]);
 
@@ -171,7 +172,17 @@ export function Dashboard() {
         );
     }
 
-    const { totalSpend, expenseCount, byCategory, byTaxCategory, monthlyTrend, topCategory, averageSpend, googleSheetUrl } =
+    const {
+        totalSpend,
+        expenseCount,
+        byCategory,
+        byTaxCategory,
+        monthlyTrend,
+        topCategory,
+        averageSpend,
+        googleSheetUrl,
+        googleSheetSyncEnabled,
+    } =
         dashboardSummary;
     const hasData = expenseCount > 0;
 
@@ -193,6 +204,9 @@ export function Dashboard() {
                     </p>
                 </div>
                 <div className="flex flex-wrap gap-2">
+                    {googleSheetSyncEnabled ? (
+                        <span className="ri-inline-pill">Auto-sync active</span>
+                    ) : null}
                     <Link to="/upload" className="ri-action-btn ri-action-btn-primary">
                         <ReceiptText size={16} strokeWidth={1.75} />
                         <span>Upload receipt</span>

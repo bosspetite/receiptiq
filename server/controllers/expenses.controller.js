@@ -104,6 +104,82 @@ function normalizeExpenseRow(row) {
   };
 }
 
+function buildSummaryPayload(expenses) {
+  const totalSpend = expenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+  const byCategoryMap = new Map();
+  const byTaxCategoryMap = new Map();
+  const monthlyTrendMap = new Map();
+
+  for (const e of expenses) {
+    const cat = e.category || 'Uncategorized';
+    const taxCategory = e.tax_category || inferTaxCategory(cat);
+    const monthKey = normalizeDate(e.date)?.slice(0, 7);
+    byCategoryMap.set(cat, (byCategoryMap.get(cat) || 0) + (Number(e.amount) || 0));
+    byTaxCategoryMap.set(
+      taxCategory,
+      (byTaxCategoryMap.get(taxCategory) || 0) + (Number(e.amount) || 0),
+    );
+    if (monthKey) {
+      monthlyTrendMap.set(
+        monthKey,
+        (monthlyTrendMap.get(monthKey) || 0) + (Number(e.amount) || 0),
+      );
+    }
+  }
+
+  return {
+    totalSpend: Math.round(totalSpend * 100) / 100,
+    expenseCount: expenses.length,
+    byCategory: Array.from(byCategoryMap.entries()).map(([category, total]) => ({
+      category,
+      total: Math.round(total * 100) / 100,
+    })),
+    byTaxCategory: Array.from(byTaxCategoryMap.entries()).map(([category, total]) => ({
+      category,
+      total: Math.round(total * 100) / 100,
+    })),
+    monthlyTrend: Array.from(monthlyTrendMap.entries())
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([month, total]) => ({
+        month,
+        total: Math.round(total * 100) / 100,
+      })),
+  };
+}
+
+async function syncGoogleSheet(event, payload) {
+  const webhookUrl = (process.env.GOOGLE_SHEETS_WEBHOOK_URL || '').trim();
+  if (!webhookUrl) {
+    return { attempted: false, success: false };
+  }
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        source: 'ReceiptIQ',
+        event,
+        payload,
+      }),
+    });
+
+    return {
+      attempted: true,
+      success: response.ok,
+      status: response.status,
+    };
+  } catch (error) {
+    return {
+      attempted: true,
+      success: false,
+      error: error?.message || 'Google Sheets sync failed',
+    };
+  }
+}
+
 function annotatePotentialDuplicates(rows) {
   const counts = new Map();
   for (const row of rows) {
@@ -243,6 +319,13 @@ export async function createExpense(req, res) {
     if (duplicate) {
       warnings.push('Potential duplicate detected: vendor, date, and amount match an existing record.');
     }
+    const syncResult = await syncGoogleSheet('expense.created', {
+      userId: req.user.id,
+      expense: data,
+    });
+    if (syncResult.attempted && !syncResult.success) {
+      warnings.push('Saved the expense, but automatic Google Sheet sync could not complete.');
+    }
 
     res.status(201).json({
       expense: { ...data, potentialDuplicate: Boolean(duplicate) },
@@ -266,48 +349,12 @@ export async function getSummary(req, res) {
   ]);
 
   const expenses = data || [];
-  const totalSpend = expenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
-  const byCategoryMap = new Map();
-  const byTaxCategoryMap = new Map();
-  const monthlyTrendMap = new Map();
-  for (const e of expenses) {
-    const cat = e.category || 'Uncategorized';
-    const taxCategory = e.tax_category || inferTaxCategory(cat);
-    const monthKey = normalizeDate(e.date)?.slice(0, 7);
-    byCategoryMap.set(cat, (byCategoryMap.get(cat) || 0) + (Number(e.amount) || 0));
-    byTaxCategoryMap.set(
-      taxCategory,
-      (byTaxCategoryMap.get(taxCategory) || 0) + (Number(e.amount) || 0),
-    );
-    if (monthKey) {
-      monthlyTrendMap.set(
-        monthKey,
-        (monthlyTrendMap.get(monthKey) || 0) + (Number(e.amount) || 0),
-      );
-    }
-  }
-  const byCategory = Array.from(byCategoryMap.entries()).map(([category, total]) => ({
-    category,
-    total: Math.round(total * 100) / 100,
-  }));
-  const byTaxCategory = Array.from(byTaxCategoryMap.entries()).map(([category, total]) => ({
-    category,
-    total: Math.round(total * 100) / 100,
-  }));
-  const monthlyTrend = Array.from(monthlyTrendMap.entries())
-    .sort((a, b) => a[0].localeCompare(b[0]))
-    .map(([month, total]) => ({
-      month,
-      total: Math.round(total * 100) / 100,
-    }));
+  const summary = buildSummaryPayload(expenses);
 
   res.json({
-    totalSpend: Math.round(totalSpend * 100) / 100,
-    expenseCount: expenses.length,
-    byCategory,
-    byTaxCategory,
-    monthlyTrend,
+    ...summary,
     googleSheetUrl: (process.env.GOOGLE_SHEET_URL || '').trim() || null,
+    googleSheetSyncEnabled: Boolean((process.env.GOOGLE_SHEETS_WEBHOOK_URL || '').trim()),
   });
 }
 
@@ -321,6 +368,12 @@ export async function deleteExpense(req, res) {
     throw err;
   }
 
+  const { data: existingExpense } = await supabase
+    .from('expenses')
+    .select(EXPENSE_COLUMNS.join(', '))
+    .eq('id', id)
+    .single();
+
   const { error } = await supabase
     .from('expenses')
     .delete()
@@ -331,6 +384,12 @@ export async function deleteExpense(req, res) {
     err.statusCode = 400;
     throw err;
   }
+
+  await syncGoogleSheet('expense.deleted', {
+    userId: req.user.id,
+    expenseId: id,
+    expense: existingExpense ? normalizeExpenseRow(existingExpense) : null,
+  });
 
   res.status(204).send();
 }

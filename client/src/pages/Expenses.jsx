@@ -93,6 +93,17 @@ export function Expenses() {
             ].map((v) => `"${String(v).replaceAll('"', '""')}"`);
             lines.push(values.join(","));
         }
+        lines.push("");
+        lines.push(
+            [
+                '"TOTAL"',
+                '""',
+                '""',
+                '""',
+                `"${totalAmount.toFixed(2)}"`,
+                '""',
+            ].join(","),
+        );
         const blob = new Blob([lines.join("\n")], {
             type: "text/csv;charset=utf-8",
         });
