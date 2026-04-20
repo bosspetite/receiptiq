@@ -62,7 +62,7 @@ export function Settings() {
                                 Session access
                             </h2>
                             <p className="mt-1 text-sm leading-6 text-slate-400">
-                                Sign out of this device when you’re done working.
+                                Sign out of this device when you're done working.
                             </p>
                         </div>
                     </div>

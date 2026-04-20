@@ -89,6 +89,9 @@ export function Dashboard() {
                                 ? summaryData.monthlyTrend
                                 : [],
                         googleSheetUrl: summaryData?.googleSheetUrl || null,
+                        googleSheetSyncEnabled: Boolean(
+                            summaryData?.googleSheetSyncEnabled,
+                        ),
                     });
                     setRecent(expenses.slice(0, 6));
 
@@ -493,7 +496,8 @@ export function Dashboard() {
                                                     {row.vendor}
                                                 </p>
                                                 <p className="mt-1 text-xs text-slate-500">
-                                                    {formatDate(row.date)} · {row.tax_category || row.category || "General"}
+                                                    {formatDate(row.date)} {" · "}
+                                                    {row.tax_category || row.category || "General"}
                                                 </p>
                                             </div>
                                             <p className="ri-amount-cell text-sm">

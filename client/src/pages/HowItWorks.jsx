@@ -43,7 +43,7 @@ export function HowItWorks() {
                     <div className="space-y-5">
                         <p className="ri-kicker">How it works</p>
                         <h1 className="ri-h1">
-                            A simple five-step system that turns receipt images
+                            A simple workflow that turns receipt images
                             into reliable expense records.
                         </h1>
                         <p className="ri-subtitle">

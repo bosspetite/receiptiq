@@ -79,7 +79,7 @@ export function Navbar() {
 
     return (
         <>
-            <aside className="hidden w-[272px] shrink-0 border-r border-white/5 bg-[#090c12] xl:flex">
+            <aside className="sticky top-0 hidden h-screen w-[272px] shrink-0 self-start border-r border-white/5 bg-[#090c12] xl:flex">
                 <div className="flex h-screen w-full flex-col px-6 py-6">
                     <BrandMark />
                     <div className="mt-10">

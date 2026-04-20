@@ -330,11 +330,7 @@ export function Expenses() {
             {filtered.length > 0 && (
                 <div className="flex flex-wrap items-center justify-between gap-3">
                     <p className="text-sm leading-6 text-slate-400">
-                        Showing <span className="tabular-nums">{start + 1}</span>-
-                        <span className="tabular-nums">
-                            {Math.min(start + pageSize, filtered.length)}
-                        </span>{" "}
-                        of <span className="tabular-nums">{filtered.length}</span>
+                        {filtered.length} result{filtered.length === 1 ? "" : "s"} in the current view.
                     </p>
                     <div className="flex items-center gap-2">
                         <button

@@ -47,7 +47,7 @@ export function Contact() {
                                             Support
                                         </p>
                                         <p className="mt-3 text-lg font-bold text-white">
-                                            Within 1 business day
+                                            Usually same day
                                         </p>
                                     </div>
                                     <div className="ri-surface-inner p-4">
@@ -55,7 +55,7 @@ export function Contact() {
                                             Business
                                         </p>
                                         <p className="mt-3 text-lg font-bold text-white">
-                                            Within 2 business days
+                                            Within a short turnaround
                                         </p>
                                     </div>
                                     <div className="ri-surface-inner p-4">

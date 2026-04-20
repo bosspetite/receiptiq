@@ -18,7 +18,7 @@ export function AppShell() {
             <div className="mx-auto flex min-h-screen w-full max-w-[1600px]">
                 <Navbar />
                 <div className="flex min-h-screen min-w-0 flex-1 flex-col">
-                    <div className="border-b border-white/5 bg-[#090c12]/70 px-4 py-4 backdrop-blur sm:px-6 lg:px-8 xl:px-10">
+                    <div className="sticky top-0 z-20 border-b border-white/5 bg-[#090c12]/85 px-4 py-4 backdrop-blur sm:px-6 lg:px-8 xl:px-10">
                         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                             <form onSubmit={handleSearchSubmit} className="relative w-full max-w-xl">
                                 <Search
