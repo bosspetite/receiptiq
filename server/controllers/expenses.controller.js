@@ -150,7 +150,7 @@ function buildSummaryPayload(expenses) {
 async function syncGoogleSheet(event, payload) {
   const webhookUrl = (process.env.GOOGLE_SHEETS_WEBHOOK_URL || '').trim();
   if (!webhookUrl) {
-    return { attempted: false, success: false };
+    return { attempted: false, success: false, reason: 'missing_webhook_url' };
   }
 
   try {
@@ -178,6 +178,45 @@ async function syncGoogleSheet(event, payload) {
       error: error?.message || 'Google Sheets sync failed',
     };
   }
+}
+
+export async function testGoogleSheetSync(req, res) {
+  const result = await syncGoogleSheet('expense.ping', {
+    userId: req.user.id,
+    expenseId: 'ping',
+    expense: {
+      id: 'ping',
+      vendor: 'ReceiptIQ Test Sync',
+      date: new Date().toISOString().slice(0, 10),
+      category: 'System',
+      tax_category: 'General',
+      amount: 0,
+      currency: 'USD',
+      receipt_url: '',
+      items: [],
+      created_at: new Date().toISOString(),
+    },
+  });
+
+  if (!result.attempted) {
+    const err = new Error('Google Sheets webhook is not configured');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  if (!result.success) {
+    const err = new Error(
+      result.error ||
+        `Google Sheets sync test failed${result.status ? ` (status ${result.status})` : ''}`,
+    );
+    err.statusCode = 400;
+    throw err;
+  }
+
+  res.json({
+    ok: true,
+    message: 'Google Sheets sync test succeeded',
+  });
 }
 
 function annotatePotentialDuplicates(rows) {

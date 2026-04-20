@@ -23,6 +23,7 @@ import { api } from "../services/api";
 import { formatCurrency, formatDate } from "../utils/formatCurrency";
 import { CardSkeleton, Skeleton } from "../components/Skeleton";
 import { EmptyState } from "../components/EmptyState";
+import toast from "react-hot-toast";
 
 export function Dashboard() {
     const rootRef = useRef(null);
@@ -31,6 +32,7 @@ export function Dashboard() {
     const [recent, setRecent] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [testingSheetSync, setTestingSheetSync] = useState(false);
 
     useEffect(() => {
         let cancelled = false;
@@ -130,6 +132,18 @@ export function Dashboard() {
 
     const justSavedVendor = location.state?.savedExpense?.vendor;
 
+    async function handleTestGoogleSheetSync() {
+        setTestingSheetSync(true);
+        try {
+            const { data } = await api.post("/expenses/google-sheet/test");
+            toast.success(data?.message || "Google Sheets sync test succeeded");
+        } catch (e) {
+            toast.error(e.message || "Google Sheets sync test failed");
+        } finally {
+            setTestingSheetSync(false);
+        }
+    }
+
     const dashboardSummary = useMemo(() => {
         const totalSpend = Number(summary?.totalSpend) || 0;
         const expenseCount = Number(summary?.expenseCount) || 0;
@@ -206,6 +220,16 @@ export function Dashboard() {
                 <div className="flex flex-wrap gap-2">
                     {googleSheetSyncEnabled ? (
                         <span className="ri-inline-pill">Auto-sync active</span>
+                    ) : null}
+                    {googleSheetSyncEnabled ? (
+                        <button
+                            type="button"
+                            onClick={handleTestGoogleSheetSync}
+                            disabled={testingSheetSync}
+                            className="ri-action-btn"
+                        >
+                            <span>{testingSheetSync ? "Testing sync..." : "Test sheet sync"}</span>
+                        </button>
                     ) : null}
                     <Link to="/upload" className="ri-action-btn ri-action-btn-primary">
                         <ReceiptText size={16} strokeWidth={1.75} />

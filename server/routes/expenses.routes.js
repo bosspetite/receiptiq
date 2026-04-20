@@ -6,6 +6,7 @@ import {
   createExpense,
   getSummary,
   deleteExpense,
+  testGoogleSheetSync,
 } from '../controllers/expenses.controller.js';
 
 export const expensesRouter = Router();
@@ -25,6 +26,11 @@ expensesRouter.get(
 expensesRouter.post(
   '/',
   asyncHandler(async (req, res) => createExpense(req, res))
+);
+
+expensesRouter.post(
+  '/google-sheet/test',
+  asyncHandler(async (req, res) => testGoogleSheetSync(req, res))
 );
 
 expensesRouter.delete(
