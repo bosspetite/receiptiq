@@ -162,25 +162,19 @@ export function UploadReceipt() {
 
             <div className="grid gap-4 sm:grid-cols-3">
                 <div className="ri-panel p-5">
-                    <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
-                        Step 1
-                    </p>
+                    <p className="ri-kicker">Capture</p>
                     <p className="mt-3 text-lg font-semibold tracking-tight text-white">
                         Upload image
                     </p>
                 </div>
                 <div className="ri-panel p-5">
-                    <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
-                        Step 2
-                    </p>
+                    <p className="ri-kicker">Review</p>
                     <p className="mt-3 text-lg font-semibold tracking-tight text-white">
                         Extract and review
                     </p>
                 </div>
                 <div className="ri-panel p-5">
-                    <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
-                        Step 3
-                    </p>
+                    <p className="ri-kicker">Save</p>
                     <p className="mt-3 text-lg font-semibold tracking-tight text-white">
                         Save to dashboard
                     </p>

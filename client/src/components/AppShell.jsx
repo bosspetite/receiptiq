@@ -19,7 +19,7 @@ export function AppShell() {
                 <Navbar />
                 <div className="flex min-h-screen min-w-0 flex-1 flex-col">
                     <div className="border-b border-white/5 bg-[#090c12]/70 px-4 py-4 backdrop-blur sm:px-6 lg:px-8 xl:px-10">
-                        <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                             <form onSubmit={handleSearchSubmit} className="relative w-full max-w-xl">
                                 <Search
                                     size={16}
@@ -36,7 +36,7 @@ export function AppShell() {
                             <button
                                 type="button"
                                 onClick={() => navigate("/upload")}
-                                className="ri-action-btn ri-action-btn-primary"
+                                className="ri-action-btn ri-action-btn-primary w-full sm:w-auto"
                             >
                                 <Upload size={16} strokeWidth={1.75} />
                                 <span>Quick upload</span>

@@ -192,6 +192,14 @@ body::after {
     backdrop-filter: blur(12px);
   }
 
+  .ri-hero-note {
+    @apply min-w-0;
+  }
+
+  .ri-hero-note-label {
+    @apply mb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-200/80;
+  }
+
   .ri-grid-accent {
     @apply relative overflow-hidden;
   }
@@ -414,32 +422,19 @@ body::after {
 
 @media (max-width: 1023px) {
   .ri-hero-frame {
-    min-height: 400px;
-  }
-
-  .ri-hero-glass-card {
-    width: 42%;
-    height: 38%;
-  }
-
-  .ri-hero-preview {
-    width: 82%;
-  }
-}
-
-@media (max-width: 639px) {
-  .ri-hero-frame {
-    min-height: auto;
-    @apply p-3;
+    min-height: 0;
+    display: grid;
+    gap: 0.75rem;
   }
 
   .ri-hero-glass-card {
     position: relative;
     left: auto;
     top: auto;
-    width: 48%;
-    height: 160px;
-    margin-bottom: 0.75rem;
+    width: min(260px, 48%);
+    height: 180px;
+    margin-bottom: 0;
+    z-index: 1;
   }
 
   .ri-hero-preview {
@@ -451,7 +446,28 @@ body::after {
 
   .ri-hero-caption {
     position: relative;
-    inset: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+  }
+}
+
+@media (max-width: 639px) {
+  .ri-hero-frame {
+    min-height: auto;
+    @apply p-3;
+  }
+
+  .ri-hero-glass-card {
+    width: min(220px, 62%);
+    height: 144px;
+  }
+
+  .ri-hero-preview {
+    width: 100%;
+  }
+
+  .ri-hero-caption {
     @apply mt-3 grid-cols-1 text-xs;
   }
 

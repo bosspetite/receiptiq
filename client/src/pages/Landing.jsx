@@ -29,9 +29,9 @@ const stories = [
 ];
 
 const heroNotes = [
-    "Upload the receipt image",
-    "Review the extracted fields",
-    "Save and watch the dashboard update",
+    { title: "Capture", body: "Upload the receipt image" },
+    { title: "Review", body: "Confirm the extracted fields" },
+    { title: "Sync", body: "Save and watch the dashboard update" },
 ];
 
 export function Landing() {
@@ -144,7 +144,10 @@ export function Landing() {
                                 </div>
                                 <div className="ri-hero-caption">
                                     {heroNotes.map((note) => (
-                                        <p key={note}>{note}</p>
+                                        <div key={note.title} className="ri-hero-note">
+                                            <p className="ri-hero-note-label">{note.title}</p>
+                                            <p>{note.body}</p>
+                                        </div>
                                     ))}
                                 </div>
                             </div>

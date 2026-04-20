@@ -78,6 +78,15 @@ export function Dashboard() {
                         byCategory: [...byCategory].sort(
                             (a, b) => (Number(b.total) || 0) - (Number(a.total) || 0),
                         ),
+                        byTaxCategory:
+                            summaryData?.byTaxCategory?.length
+                                ? summaryData.byTaxCategory
+                                : [],
+                        monthlyTrend:
+                            summaryData?.monthlyTrend?.length
+                                ? summaryData.monthlyTrend
+                                : [],
+                        googleSheetUrl: summaryData?.googleSheetUrl || null,
                     });
                     setRecent(expenses.slice(0, 6));
 

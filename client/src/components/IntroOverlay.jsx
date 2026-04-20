@@ -13,6 +13,12 @@ export function IntroOverlay() {
     useLayoutEffect(() => {
         if (!visible || !rootRef.current) return undefined;
 
+        if (window.innerWidth < 768) {
+            window.sessionStorage.setItem(STORAGE_KEY, "1");
+            setVisible(false);
+            return undefined;
+        }
+
         const reduceMotion = window.matchMedia?.(
             "(prefers-reduced-motion: reduce)",
         )?.matches;
@@ -73,7 +79,7 @@ export function IntroOverlay() {
         >
             <div
                 data-ri-intro-panel
-                className="relative w-full max-w-3xl overflow-hidden rounded-[1.4rem] border border-white/10 bg-slate-950/88 px-8 py-14 shadow-[0_24px_90px_rgba(0,0,0,0.38)]"
+                className="relative w-full max-w-3xl overflow-hidden rounded-[1.4rem] border border-white/10 bg-slate-950/88 px-6 py-10 shadow-[0_24px_90px_rgba(0,0,0,0.38)] sm:px-8 sm:py-14"
             >
                 <div
                     data-ri-intro-glow
@@ -101,7 +107,7 @@ export function IntroOverlay() {
                         </p>
                         <h1
                             data-ri-intro-line
-                            className="max-w-2xl text-4xl font-bold leading-tight text-white sm:text-6xl"
+                            className="max-w-2xl text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl"
                         >
                             Keep expense tracking clean from the first receipt.
                         </h1>

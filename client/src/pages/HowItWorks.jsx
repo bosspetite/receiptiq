@@ -1,24 +1,35 @@
 import { Link } from "react-router-dom";
+import { LineChart, PencilLine, ScanLine, ShieldCheck, Sparkles } from "lucide-react";
 import { MarketingShell } from "../components/MarketingShell";
 
 const steps = [
     {
+        icon: ScanLine,
+        label: "Capture",
         title: "Start with a receipt image",
         body: "Upload a clear receipt photo, screenshot, or export. The preview helps the user confirm the right file before extraction begins.",
     },
     {
+        icon: Sparkles,
+        label: "Extract",
         title: "AI proposes structured fields",
         body: "ReceiptIQ sends the image to Gemini and asks for clean JSON, then places the results straight into the review form.",
     },
     {
+        icon: PencilLine,
+        label: "Review",
         title: "Human review keeps the data trustworthy",
         body: "Users can edit vendor, amount, category, currency, and line items before the record ever touches the database.",
     },
     {
+        icon: ShieldCheck,
+        label: "Protect",
         title: "Saved records stay personal",
         body: "Each saved expense stays tied to the signed-in account so records remain private and account-specific.",
     },
     {
+        icon: LineChart,
+        label: "Track",
         title: "The dashboard updates immediately",
         body: "Recent expenses, total spend, and category breakdowns all reflect the newly saved data so the workflow feels closed and complete.",
     },
@@ -59,12 +70,15 @@ export function HowItWorks() {
                 </section>
 
                 <section className="mt-12 grid gap-5">
-                    {steps.map((step, index) => (
+                    {steps.map((step) => {
+                        const Icon = step.icon;
+                        return (
                         <article key={step.title} className="ri-surface ri-surface-pad flex flex-col gap-4 md:flex-row md:items-start">
-                            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-teal-300 to-amber-300 text-xl font-bold text-slate-950">
-                                {index + 1}
+                            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-teal-200">
+                                <Icon size={20} strokeWidth={1.75} />
                             </div>
                             <div>
+                                <p className="ri-kicker">{step.label}</p>
                                 <h2 className="text-2xl font-bold text-white">
                                     {step.title}
                                 </h2>
@@ -73,7 +87,7 @@ export function HowItWorks() {
                                 </p>
                             </div>
                         </article>
-                    ))}
+                    )})}
                 </section>
             </main>
         </MarketingShell>
