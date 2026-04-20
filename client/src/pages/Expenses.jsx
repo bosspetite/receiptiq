@@ -345,10 +345,6 @@ export function Expenses() {
                         >
                             Prev
                         </button>
-                        <span className="ri-inline-pill">
-                            Page <span className="tabular-nums">{pageSafe}</span> of{" "}
-                            <span className="tabular-nums">{totalPages}</span>
-                        </span>
                         <button
                             type="button"
                             className="ri-action-btn"
