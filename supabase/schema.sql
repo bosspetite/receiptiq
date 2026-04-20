@@ -11,6 +11,7 @@ create table if not exists public.expenses (
   date date,
   amount double precision not null,
   category text not null default 'General',
+  tax_category text not null default 'General',
   items jsonb not null default '[]'::jsonb,
   receipt_url text,
   currency text not null default 'USD',
@@ -23,6 +24,7 @@ alter table public.expenses
   add column if not exists date date,
   add column if not exists amount double precision,
   add column if not exists category text default 'General',
+  add column if not exists tax_category text default 'General',
   add column if not exists items jsonb default '[]'::jsonb,
   add column if not exists receipt_url text,
   add column if not exists currency text default 'USD',
@@ -33,6 +35,7 @@ alter table public.expenses
   alter column vendor set not null,
   alter column amount set not null,
   alter column category set default 'General',
+  alter column tax_category set default 'General',
   alter column items set default '[]'::jsonb,
   alter column currency set default 'USD',
   alter column created_at set default now();

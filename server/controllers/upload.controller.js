@@ -23,6 +23,11 @@ const RECEIPT_SCHEMA = {
       description:
         'Best-fit category such as Groceries, Dining, Transport, Office, Utilities, Health, Shopping, or General.',
     },
+    tax_category: {
+      type: 'string',
+      description:
+        'Tax-friendly category such as Travel, Meals, Office Supplies, Software & Utilities, Health, or General.',
+    },
     currency: {
       type: 'string',
       description:
@@ -41,7 +46,7 @@ const RECEIPT_SCHEMA = {
         'Leave blank because the server does not upload the image during extraction.',
     },
   },
-  required: ['vendor', 'date', 'amount', 'category', 'currency', 'items'],
+  required: ['vendor', 'date', 'amount', 'category', 'tax_category', 'currency', 'items'],
 };
 
 const EXTRACTION_PROMPT = `Extract the receipt into structured data.
@@ -52,6 +57,7 @@ Rules:
 - Use the final amount paid for "amount".
 - Use YYYY-MM-DD for the date when you can confidently infer it, otherwise return an empty string.
 - Use a short category label.
+- Suggest a tax-ready category for "tax_category".
 - Return item names only in the items array, not prices.
 - If a field is unclear, make the safest reasonable guess except for date which should be empty if uncertain.
 - Do not wrap the JSON in markdown.`;
@@ -143,6 +149,7 @@ async function extractWithGemini({ base64, mimeType }) {
     date: parsed.date ?? '',
     amount: parseAmount(parsed.amount),
     category: parsed.category ?? 'General',
+    tax_category: parsed.tax_category ?? 'General',
     currency: parsed.currency ?? 'USD',
     items: Array.isArray(parsed.items) ? parsed.items.filter(Boolean) : [],
     receipt_url: parsed.receipt_url ?? '',

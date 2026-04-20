@@ -8,6 +8,7 @@ const emptyForm = {
     date: "",
     amount: "",
     category: "General",
+    tax_category: "General",
     currency: "USD",
     items: "",
     receipt_url: "",
@@ -70,6 +71,7 @@ export function UploadReceipt() {
                 date: data.date ?? "",
                 amount: data.amount != null ? String(data.amount) : "",
                 category: data.category ?? "General",
+                tax_category: data.tax_category ?? "General",
                 currency: data.currency ?? "USD",
                 items: Array.isArray(data.items)
                     ? data.items.join("\n")
@@ -112,6 +114,7 @@ export function UploadReceipt() {
                 date: form.date || null,
                 amount: amountNum,
                 category: form.category || "General",
+                tax_category: form.tax_category || "General",
                 items,
                 receipt_url: form.receipt_url || null,
                 currency: form.currency || "USD",
@@ -269,6 +272,7 @@ export function UploadReceipt() {
                         <Field label="Amount" type="number" step="0.01" value={form.amount} onChange={(value) => setForm((current) => ({ ...current, amount: value }))} />
                         <Field label="Currency" value={form.currency} onChange={(value) => setForm((current) => ({ ...current, currency: value }))} />
                         <Field label="Category" value={form.category} onChange={(value) => setForm((current) => ({ ...current, category: value }))} />
+                        <Field label="Tax category" value={form.tax_category} onChange={(value) => setForm((current) => ({ ...current, tax_category: value }))} />
                         <Field label="Receipt URL (optional)" value={form.receipt_url} onChange={(value) => setForm((current) => ({ ...current, receipt_url: value }))} className="sm:col-span-2" />
                     </div>
 

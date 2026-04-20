@@ -5,6 +5,7 @@ import {
   listExpenses,
   createExpense,
   getSummary,
+  deleteExpense,
 } from '../controllers/expenses.controller.js';
 
 export const expensesRouter = Router();
@@ -24,4 +25,9 @@ expensesRouter.get(
 expensesRouter.post(
   '/',
   asyncHandler(async (req, res) => createExpense(req, res))
+);
+
+expensesRouter.delete(
+  '/:id',
+  asyncHandler(async (req, res) => deleteExpense(req, res))
 );

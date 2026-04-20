@@ -1,6 +1,6 @@
 export function formatCurrency(amount, currency = 'USD') {
   const n = typeof amount === 'string' ? parseFloat(amount, 10) : amount;
-  if (Number.isNaN(n)) return '—';
+  if (Number.isNaN(n)) return '--';
   try {
     return new Intl.NumberFormat(undefined, {
       style: 'currency',
@@ -12,9 +12,9 @@ export function formatCurrency(amount, currency = 'USD') {
 }
 
 export function formatDate(value) {
-  if (!value) return '—';
+  if (!value) return '--';
   const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return '—';
+  if (Number.isNaN(d.getTime())) return '--';
   return d.toLocaleDateString(undefined, {
     year: 'numeric',
     month: 'short',

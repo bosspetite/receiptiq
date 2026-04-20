@@ -1,18 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { Download, Filter, ReceiptText, Search } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
+import { AlertTriangle, Download, Filter, ReceiptText, Search, Trash2 } from "lucide-react";
 import { api } from "../services/api";
 import { formatCurrency, formatDate } from "../utils/formatCurrency";
 import { TableRowSkeleton } from "../components/Skeleton";
 import { EmptyState } from "../components/EmptyState";
+import toast from "react-hot-toast";
 
 export function Expenses() {
+    const [searchParams] = useSearchParams();
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [query, setQuery] = useState("");
+    const [query, setQuery] = useState(() => searchParams.get("q") || "");
     const [category, setCategory] = useState("All");
     const [page, setPage] = useState(1);
+    const [deletingId, setDeletingId] = useState(null);
     const pageSize = 12;
 
     useEffect(() => {
@@ -72,14 +75,19 @@ export function Expenses() {
         setPage(1);
     }, [query, category]);
 
+    useEffect(() => {
+        setQuery(searchParams.get("q") || "");
+    }, [searchParams]);
+
     function exportCsv() {
-        const header = ["vendor", "date", "category", "amount", "currency"];
+        const header = ["vendor", "date", "category", "tax_category", "amount", "currency"];
         const lines = [header.join(",")];
         for (const r of filtered) {
             const values = [
                 r.vendor ?? "",
                 r.date ?? "",
                 r.category ?? "",
+                r.tax_category ?? "",
                 r.amount ?? "",
                 r.currency ?? "",
             ].map((v) => `"${String(v).replaceAll('"', '""')}"`);
@@ -96,6 +104,19 @@ export function Expenses() {
         a.click();
         a.remove();
         URL.revokeObjectURL(url);
+    }
+
+    async function handleDelete(id) {
+        setDeletingId(id);
+        try {
+            await api.delete(`/expenses/${id}`);
+            setRows((current) => current.filter((row) => row.id !== id));
+            toast.success("Expense deleted");
+        } catch (e) {
+            toast.error(e.message || "Could not delete expense");
+        } finally {
+            setDeletingId(null);
+        }
     }
 
     if (loading) {
@@ -242,14 +263,24 @@ export function Expenses() {
                                 <th className="ri-th">Vendor</th>
                                 <th className="ri-th">Date</th>
                                 <th className="ri-th">Category</th>
+                                <th className="ri-th">Tax category</th>
                                 <th className="ri-th text-right">Amount</th>
+                                <th className="ri-th text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {paged.map((row) => (
                                 <tr key={row.id} className="ri-tr">
                                     <td className="ri-td font-medium text-white">
-                                        {row.vendor}
+                                        <div className="flex items-center gap-2">
+                                            <span>{row.vendor}</span>
+                                            {row.potentialDuplicate ? (
+                                                <span className="ri-inline-warning">
+                                                    <AlertTriangle size={12} strokeWidth={1.75} />
+                                                    <span>Potential duplicate</span>
+                                                </span>
+                                            ) : null}
+                                        </div>
                                     </td>
                                     <td className="ri-td-muted">
                                         {formatDate(row.date)}
@@ -259,8 +290,24 @@ export function Expenses() {
                                             {row.category || "Uncategorized"}
                                         </span>
                                     </td>
+                                    <td className="ri-td">
+                                        <span className="ri-inline-pill">
+                                            {row.tax_category || "General"}
+                                        </span>
+                                    </td>
                                     <td className="ri-td ri-amount-cell">
                                         {formatCurrency(row.amount, row.currency)}
+                                    </td>
+                                    <td className="ri-td text-right">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleDelete(row.id)}
+                                            disabled={deletingId === row.id}
+                                            className="ri-action-btn"
+                                        >
+                                            <Trash2 size={14} strokeWidth={1.75} />
+                                            <span>{deletingId === row.id ? "Deleting..." : "Delete"}</span>
+                                        </button>
                                     </td>
                                 </tr>
                             ))}

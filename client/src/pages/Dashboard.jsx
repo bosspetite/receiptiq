@@ -15,6 +15,8 @@ import {
     YAxis,
     Tooltip,
     CartesianGrid,
+    LineChart,
+    Line,
 } from "recharts";
 import gsap from "gsap";
 import { api } from "../services/api";
@@ -123,12 +125,17 @@ export function Dashboard() {
         const totalSpend = Number(summary?.totalSpend) || 0;
         const expenseCount = Number(summary?.expenseCount) || 0;
         const byCategory = summary?.byCategory || [];
+        const byTaxCategory = summary?.byTaxCategory || [];
+        const monthlyTrend = summary?.monthlyTrend || [];
         return {
             totalSpend,
             expenseCount,
             byCategory,
+            byTaxCategory,
+            monthlyTrend,
             topCategory: byCategory[0]?.category || "None yet",
             averageSpend: expenseCount > 0 ? totalSpend / expenseCount : 0,
+            googleSheetUrl: summary?.googleSheetUrl || null,
         };
     }, [summary]);
 
@@ -155,7 +162,7 @@ export function Dashboard() {
         );
     }
 
-    const { totalSpend, expenseCount, byCategory, topCategory, averageSpend } =
+    const { totalSpend, expenseCount, byCategory, byTaxCategory, monthlyTrend, topCategory, averageSpend, googleSheetUrl } =
         dashboardSummary;
     const hasData = expenseCount > 0;
 
@@ -185,6 +192,16 @@ export function Dashboard() {
                         <span>View expenses</span>
                         <ArrowRight size={16} strokeWidth={1.75} />
                     </Link>
+                    {googleSheetUrl ? (
+                        <a
+                            href={googleSheetUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="ri-action-btn"
+                        >
+                            <span>Open Google Sheet</span>
+                        </a>
+                    ) : null}
                 </div>
             </div>
 
@@ -259,7 +276,45 @@ export function Dashboard() {
                         </section>
                     </div>
 
-                    <div className="grid gap-4 xl:grid-cols-[minmax(0,1.4fr),380px]">
+                    <section className="ri-panel p-5">
+                        <div className="flex flex-wrap items-end justify-between gap-3">
+                            <div>
+                                <h2 className="text-lg font-semibold tracking-tight text-white">
+                                    Financial overview
+                                </h2>
+                                <p className="mt-1 text-sm leading-6 text-slate-400">
+                                    Category and tax-ready breakdown for auditing and reporting.
+                                </p>
+                            </div>
+                            <span className="ri-inline-pill">
+                                {byCategory.length} categories
+                            </span>
+                        </div>
+                        <div className="mt-6 grid gap-4 xl:grid-cols-2">
+                            <div className="space-y-3">
+                                {byCategory.slice(0, 5).map((entry) => (
+                                    <div key={entry.category} className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
+                                        <span className="text-sm text-slate-300">{entry.category}</span>
+                                        <span className="ri-amount-cell text-sm">
+                                            {formatCurrency(entry.total)}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="space-y-3">
+                                {byTaxCategory.slice(0, 5).map((entry) => (
+                                    <div key={entry.category} className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
+                                        <span className="text-sm text-slate-300">{entry.category}</span>
+                                        <span className="ri-amount-cell text-sm">
+                                            {formatCurrency(entry.total)}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="grid gap-4 xl:grid-cols-[minmax(0,1.2fr),minmax(0,1.2fr),380px]">
                         <section className="ri-panel p-5">
                             <div className="flex flex-wrap items-end justify-between gap-3">
                                 <div>
@@ -313,6 +368,59 @@ export function Dashboard() {
                             </div>
                         </section>
 
+                        <section className="ri-panel p-5">
+                            <div className="flex flex-wrap items-end justify-between gap-3">
+                                <div>
+                                    <h2 className="text-lg font-semibold tracking-tight text-white">
+                                        Monthly trend
+                                    </h2>
+                                    <p className="mt-1 text-sm leading-6 text-slate-400">
+                                        A month-by-month view of how total spend is moving.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="mt-6 h-72 w-full">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <LineChart
+                                        data={monthlyTrend}
+                                        margin={{ top: 8, right: 8, left: -16, bottom: 0 }}
+                                    >
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
+                                        <XAxis
+                                            dataKey="month"
+                                            stroke="#64748b"
+                                            tick={{ fill: "#94a3b8", fontSize: 12 }}
+                                            tickLine={false}
+                                            axisLine={false}
+                                        />
+                                        <YAxis
+                                            stroke="#64748b"
+                                            tick={{ fill: "#94a3b8", fontSize: 12 }}
+                                            tickLine={false}
+                                            axisLine={false}
+                                        />
+                                        <Tooltip
+                                            contentStyle={{
+                                                backgroundColor: "#090c12",
+                                                border: "1px solid rgba(255,255,255,0.08)",
+                                                borderRadius: "12px",
+                                            }}
+                                            labelStyle={{ color: "#f8fafc" }}
+                                        />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="total"
+                                            stroke="#10b981"
+                                            strokeWidth={2}
+                                            dot={{ r: 3, fill: "#10b981" }}
+                                            activeDot={{ r: 5 }}
+                                            name="Spend"
+                                        />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </section>
+
                         <section className="ri-panel overflow-hidden">
                             <div className="border-b border-white/5 px-5 py-4">
                                 <h2 className="text-lg font-semibold tracking-tight text-white">
@@ -338,7 +446,7 @@ export function Dashboard() {
                                                     {row.vendor}
                                                 </p>
                                                 <p className="mt-1 text-xs text-slate-500">
-                                                    {formatDate(row.date)} · {row.category || "Uncategorized"}
+                                                    {formatDate(row.date)} · {row.tax_category || row.category || "General"}
                                                 </p>
                                             </div>
                                             <p className="ri-amount-cell text-sm">
