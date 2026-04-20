@@ -1,5 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import {
+    ArrowRight,
+    CreditCard,
+    LayoutDashboard,
+    ReceiptText,
+    Wallet,
+} from "lucide-react";
 import {
     ResponsiveContainer,
     BarChart,
@@ -37,51 +44,38 @@ export function Dashboard() {
                     listRes.status === "fulfilled"
                         ? listRes.value.data?.expenses || []
                         : [];
+
+                const totalAmount = expenses.reduce(
+                    (sum, expense) => sum + (Number(expense.amount) || 0),
+                    0,
+                );
+
+                const categoryTotals = expenses.reduce((map, expense) => {
+                    const category = expense.category || "Uncategorized";
+                    map.set(category, (map.get(category) || 0) + (Number(expense.amount) || 0));
+                    return map;
+                }, new Map());
+
                 const summaryData =
                     summaryRes.status === "fulfilled"
                         ? summaryRes.value.data
                         : null;
-                const fallbackSummary = expenses.reduce(
-                    (acc, expense) => {
-                        const amount = Number(expense.amount) || 0;
-                        const category = expense.category || "Uncategorized";
-                        acc.totalSpend += amount;
-                        acc.expenseCount += 1;
-                        acc.byCategoryMap.set(
-                            category,
-                            (acc.byCategoryMap.get(category) || 0) + amount,
-                        );
-                        return acc;
-                    },
-                    {
-                        totalSpend: 0,
-                        expenseCount: 0,
-                        byCategoryMap: new Map(),
-                    },
-                );
 
-                const rawByCategory =
+                const byCategory =
                     summaryData?.byCategory ||
-                    Array.from(fallbackSummary.byCategoryMap.entries()).map(
-                        ([category, total]) => ({
-                            category,
-                            total,
-                        }),
-                    );
-
-                const sortedCategories = [...rawByCategory].sort(
-                    (a, b) => (Number(b.total) || 0) - (Number(a.total) || 0),
-                );
+                    Array.from(categoryTotals.entries()).map(([category, total]) => ({
+                        category,
+                        total,
+                    }));
 
                 if (!cancelled) {
                     setSummary({
-                        totalSpend:
-                            summaryData?.totalSpend ??
-                            fallbackSummary.totalSpend,
+                        totalSpend: summaryData?.totalSpend ?? totalAmount,
                         expenseCount:
-                            summaryData?.expenseCount ??
-                            fallbackSummary.expenseCount,
-                        byCategory: sortedCategories,
+                            summaryData?.expenseCount ?? expenses.length,
+                        byCategory: [...byCategory].sort(
+                            (a, b) => (Number(b.total) || 0) - (Number(a.total) || 0),
+                        ),
                     });
                     setRecent(expenses.slice(0, 6));
 
@@ -117,17 +111,32 @@ export function Dashboard() {
         gsap.from(cards, {
             opacity: 0,
             y: 18,
-            stagger: 0.1,
-            duration: 0.65,
+            stagger: 0.08,
+            duration: 0.55,
             ease: "power3.out",
         });
     }, [loading]);
+
+    const justSavedVendor = location.state?.savedExpense?.vendor;
+
+    const dashboardSummary = useMemo(() => {
+        const totalSpend = Number(summary?.totalSpend) || 0;
+        const expenseCount = Number(summary?.expenseCount) || 0;
+        const byCategory = summary?.byCategory || [];
+        return {
+            totalSpend,
+            expenseCount,
+            byCategory,
+            topCategory: byCategory[0]?.category || "None yet",
+            averageSpend: expenseCount > 0 ? totalSpend / expenseCount : 0,
+        };
+    }, [summary]);
 
     if (loading) {
         return (
             <div className="space-y-8">
                 <Skeleton className="h-10 w-64" />
-                <div className="grid gap-4 sm:grid-cols-3">
+                <div className="grid gap-4 lg:grid-cols-3">
                     <CardSkeleton />
                     <CardSkeleton />
                     <CardSkeleton />
@@ -146,199 +155,200 @@ export function Dashboard() {
         );
     }
 
-    const { totalSpend = 0, expenseCount = 0, byCategory = [] } = summary || {};
+    const { totalSpend, expenseCount, byCategory, topCategory, averageSpend } =
+        dashboardSummary;
     const hasData = expenseCount > 0;
-    const topCategory = byCategory[0]?.category || "-";
-    const topCategories = byCategory.slice(0, 3);
-    const justSavedVendor = location.state?.savedExpense?.vendor;
 
     return (
         <div ref={rootRef} className="ri-page">
             {justSavedVendor ? (
-                <div className="rounded-[1.4rem] border border-emerald-700/40 bg-emerald-950/30 p-4 text-sm text-emerald-100">
-                    Saved <span className="font-semibold">{justSavedVendor}</span>. Your dashboard and recent expenses have been refreshed.
+                <div className="rounded-xl border border-emerald-500/15 bg-emerald-500/[0.07] p-4 text-sm text-emerald-100">
+                    Saved <span className="font-semibold">{justSavedVendor}</span>.
+                    Your totals and recent expenses are up to date.
                 </div>
             ) : null}
 
-            <div className="ri-page-hero">
-                <div className="relative flex flex-wrap items-end justify-between gap-4">
-                    <div>
-                        <p className="ri-kicker">Live overview</p>
-                        <h1 className="ri-h1">Dashboard</h1>
-                        <p className="ri-subtitle">
-                            A calm view of what has already been captured, saved,
-                            and categorized.
-                        </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                        <Link to="/upload" className="ri-btn-primary">
-                            Upload receipt
-                        </Link>
-                        <Link to="/expenses" className="ri-btn-secondary">
-                            View expenses
-                        </Link>
-                    </div>
+            <div className="ri-page-header">
+                <div>
+                    <h1 className="ri-page-title">Dashboard</h1>
+                    <p className="ri-page-copy">
+                        A clean overview of total spending, activity, and where
+                        your money is going.
+                    </p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                    <Link to="/upload" className="ri-action-btn ri-action-btn-primary">
+                        <ReceiptText size={16} strokeWidth={1.75} />
+                        <span>Upload receipt</span>
+                    </Link>
+                    <Link to="/expenses" className="ri-action-btn">
+                        <span>View expenses</span>
+                        <ArrowRight size={16} strokeWidth={1.75} />
+                    </Link>
                 </div>
             </div>
 
             {!hasData ? (
                 <EmptyState
                     title="No expenses yet"
-                    description="Upload a receipt to extract the details, save it, and start building your dashboard."
+                    description="Upload a receipt to save your first expense and start building a usable spending history."
                     action={
-                        <Link to="/upload" className="ri-btn-primary">
+                        <Link to="/upload" className="ri-action-btn ri-action-btn-primary">
                             Upload receipt
                         </Link>
                     }
                 />
             ) : (
                 <>
-                    <div className="grid gap-4 lg:grid-cols-12">
-                        <div
-                            data-ri-card
-                            className="ri-surface ri-surface-pad ri-grid-accent lg:col-span-4"
-                        >
-                            <p className="ri-kicker">Spend to date</p>
-                            <p className="ri-stat-value">
-                                {formatCurrency(totalSpend)}
-                            </p>
-                            <p className="mt-3 text-sm text-slate-400">
-                                Across {expenseCount} saved expenses.
-                            </p>
-                        </div>
-                        <div
-                            data-ri-card
-                            className="ri-surface ri-surface-pad ri-grid-accent lg:col-span-4"
-                        >
-                            <p className="ri-kicker">Receipt volume</p>
-                            <p className="ri-stat-value">{expenseCount}</p>
-                            <p className="mt-3 text-sm text-slate-400">
-                                New records appear here the moment they are saved.
-                            </p>
-                        </div>
-                        <div
-                            data-ri-card
-                            className="ri-surface ri-surface-pad ri-grid-accent lg:col-span-4"
-                        >
-                            <p className="ri-kicker">Top category</p>
-                            <p className="ri-stat-value">{topCategory}</p>
-                            <p className="mt-3 text-sm text-slate-400">
-                                The strongest spending cluster in your workspace.
-                            </p>
-                            <div className="mt-4 flex flex-wrap gap-2">
-                                {topCategories.map((c) => (
-                                    <span key={c.category} className="ri-badge">
-                                        {c.category}
-                                        <span className="ml-2 tabular-nums text-slate-400">
-                                            {formatCurrency(c.total)}
-                                        </span>
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="grid gap-4 lg:grid-cols-12">
-                        <div className="ri-surface ri-surface-pad lg:col-span-8">
-                            <div className="flex flex-wrap items-end justify-between gap-3">
+                    <div className="grid gap-4 xl:grid-cols-3">
+                        <section data-ri-card className="ri-panel p-5">
+                            <div className="flex items-start justify-between gap-4">
                                 <div>
-                                    <p className="ri-kicker">Spend map</p>
-                                    <h2 className="text-2xl font-bold text-white">
-                                        Spend by category
-                                    </h2>
-                                    <p className="mt-2 text-sm text-slate-400">
-                                        Hover to inspect how your saved expenses are distributed.
+                                    <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
+                                        Total spending
+                                    </p>
+                                    <p className="mt-3 text-3xl font-semibold tracking-tight text-white">
+                                        {formatCurrency(totalSpend)}
                                     </p>
                                 </div>
-                                <span className="ri-badge-accent">Live data</span>
+                                <div className="ri-icon-wrap">
+                                    <Wallet size={18} strokeWidth={1.75} />
+                                </div>
+                            </div>
+                            <p className="mt-3 text-sm leading-6 text-slate-400">
+                                The sum of all saved expenses in your workspace.
+                            </p>
+                        </section>
+
+                        <section data-ri-card className="ri-panel p-5">
+                            <div className="flex items-start justify-between gap-4">
+                                <div>
+                                    <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
+                                        Total records
+                                    </p>
+                                    <p className="mt-3 text-3xl font-semibold tracking-tight text-white">
+                                        {expenseCount}
+                                    </p>
+                                </div>
+                                <div className="ri-icon-wrap">
+                                    <LayoutDashboard size={18} strokeWidth={1.75} />
+                                </div>
+                            </div>
+                            <p className="mt-3 text-sm leading-6 text-slate-400">
+                                Every expense that has been reviewed and saved.
+                            </p>
+                        </section>
+
+                        <section data-ri-card className="ri-panel p-5">
+                            <div className="flex items-start justify-between gap-4">
+                                <div>
+                                    <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
+                                        Average expense
+                                    </p>
+                                    <p className="mt-3 text-3xl font-semibold tracking-tight text-white">
+                                        {formatCurrency(averageSpend)}
+                                    </p>
+                                </div>
+                                <div className="ri-icon-wrap">
+                                    <CreditCard size={18} strokeWidth={1.75} />
+                                </div>
+                            </div>
+                            <p className="mt-3 text-sm leading-6 text-slate-400">
+                                Current top category: {topCategory}.
+                            </p>
+                        </section>
+                    </div>
+
+                    <div className="grid gap-4 xl:grid-cols-[minmax(0,1.4fr),380px]">
+                        <section className="ri-panel p-5">
+                            <div className="flex flex-wrap items-end justify-between gap-3">
+                                <div>
+                                    <h2 className="text-lg font-semibold tracking-tight text-white">
+                                        Spend by category
+                                    </h2>
+                                    <p className="mt-1 text-sm leading-6 text-slate-400">
+                                        A simple category view built from your saved expenses.
+                                    </p>
+                                </div>
+                                <span className="ri-inline-pill">
+                                    {byCategory.length} categories
+                                </span>
                             </div>
                             <div className="mt-6 h-72 w-full">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart
                                         data={byCategory}
-                                        margin={{ top: 8, right: 8, left: 0, bottom: 0 }}
+                                        margin={{ top: 8, right: 8, left: -16, bottom: 0 }}
                                     >
-                                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
                                         <XAxis
                                             dataKey="category"
-                                            stroke="#94a3b8"
+                                            stroke="#64748b"
                                             tick={{ fill: "#94a3b8", fontSize: 12 }}
+                                            tickLine={false}
+                                            axisLine={false}
                                         />
                                         <YAxis
-                                            stroke="#94a3b8"
+                                            stroke="#64748b"
                                             tick={{ fill: "#94a3b8", fontSize: 12 }}
+                                            tickLine={false}
+                                            axisLine={false}
                                         />
                                         <Tooltip
                                             contentStyle={{
-                                                backgroundColor: "#1e293b",
-                                                border: "1px solid #475569",
-                                                borderRadius: "14px",
+                                                backgroundColor: "#090c12",
+                                                border: "1px solid rgba(255,255,255,0.08)",
+                                                borderRadius: "12px",
                                             }}
-                                            labelStyle={{ color: "#f1f5f9" }}
+                                            labelStyle={{ color: "#f8fafc" }}
                                         />
                                         <Bar
                                             dataKey="total"
-                                            fill="#48ccbf"
-                                            radius={[10, 10, 0, 0]}
+                                            fill="#14b8a6"
+                                            radius={[8, 8, 0, 0]}
                                             name="Amount"
                                         />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
-                        </div>
+                        </section>
 
-                        <div className="ri-surface overflow-hidden lg:col-span-4">
-                            <div className="flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-4">
-                                <div>
-                                    <p className="ri-kicker">Recent activity</p>
-                                    <p className="text-lg font-bold text-white">
-                                        Recent expenses
-                                    </p>
-                                </div>
-                                <Link
-                                    to="/expenses"
-                                    className="text-sm text-slate-300 hover:text-teal-200"
-                                >
-                                    View all
-                                </Link>
+                        <section className="ri-panel overflow-hidden">
+                            <div className="border-b border-white/5 px-5 py-4">
+                                <h2 className="text-lg font-semibold tracking-tight text-white">
+                                    Recent expenses
+                                </h2>
+                                <p className="mt-1 text-sm leading-6 text-slate-400">
+                                    The latest reviewed records in your account.
+                                </p>
                             </div>
                             <div className="divide-y divide-white/5">
                                 {recent.length === 0 ? (
-                                    <div className="p-6 text-sm text-slate-400">
+                                    <div className="px-5 py-6 text-sm text-slate-400">
                                         No recent expenses found.
                                     </div>
                                 ) : (
                                     recent.map((row) => (
                                         <div
                                             key={row.id}
-                                            className="flex items-center justify-between gap-3 px-6 py-4 hover:bg-white/5"
+                                            className="flex items-center justify-between gap-4 px-5 py-4"
                                         >
                                             <div className="min-w-0">
                                                 <p className="truncate text-sm font-medium text-white">
                                                     {row.vendor}
                                                 </p>
                                                 <p className="mt-1 text-xs text-slate-500">
-                                                    {formatDate(row.date)} | {row.category || "Uncategorized"}
+                                                    {formatDate(row.date)} · {row.category || "Uncategorized"}
                                                 </p>
                                             </div>
-                                            <div className="text-right">
-                                                <p className="tabular-nums text-sm font-semibold text-slate-100">
-                                                    {formatCurrency(row.amount, row.currency)}
-                                                </p>
-                                            </div>
+                                            <p className="ri-amount-cell text-sm">
+                                                {formatCurrency(row.amount, row.currency)}
+                                            </p>
                                         </div>
                                     ))
                                 )}
                             </div>
-                            <div className="border-t border-white/10 bg-white/5 px-6 py-4">
-                                <Link
-                                    to="/upload"
-                                    className="ri-btn-primary w-full justify-center"
-                                >
-                                    Upload another receipt
-                                </Link>
-                            </div>
-                        </div>
+                        </section>
                     </div>
                 </>
             )}

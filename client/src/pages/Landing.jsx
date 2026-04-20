@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight, ScanLine, ShieldCheck, Wallet } from "lucide-react";
 import { gsap } from "gsap";
 import { IntroOverlay } from "../components/IntroOverlay";
 import { MarketingShell } from "../components/MarketingShell";
@@ -7,9 +8,9 @@ import { useAuth } from "../hooks/useAuth";
 import heroImage from "../assets/hero.png";
 
 const highlights = [
-    { label: "Made for", value: "Freelancers" },
-    { label: "Best fit", value: "Small business" },
-    { label: "Workflow", value: "Scan to saved" },
+    { label: "Made for", value: "Freelancers", icon: Wallet },
+    { label: "Best fit", value: "Small business", icon: ShieldCheck },
+    { label: "Workflow", value: "Scan to saved", icon: ScanLine },
 ];
 
 const stories = [
@@ -51,28 +52,19 @@ export function Landing() {
         const ctx = gsap.context(() => {
             gsap.from("[data-ri-hero-copy]", {
                 opacity: 0,
-                y: 28,
-                duration: 0.8,
-                stagger: 0.08,
+                y: 24,
+                duration: 0.7,
+                stagger: 0.07,
                 ease: "power3.out",
             });
 
             gsap.from("[data-ri-hero-art]", {
                 opacity: 0,
-                scale: 0.96,
-                y: 18,
-                duration: 0.95,
+                scale: 0.98,
+                y: 14,
+                duration: 0.8,
                 ease: "power3.out",
-                delay: 0.12,
-            });
-
-            gsap.from("[data-ri-story-card]", {
-                opacity: 0,
-                y: 24,
-                stagger: 0.1,
-                duration: 0.7,
-                ease: "power2.out",
-                delay: 0.35,
+                delay: 0.1,
             });
         }, root);
 
@@ -83,32 +75,30 @@ export function Landing() {
         <MarketingShell>
             <IntroOverlay />
             <main ref={rootRef}>
-                <section className="ri-container py-10 sm:py-14">
-                    <div className="grid gap-8 lg:grid-cols-[1.02fr,0.98fr] lg:items-center">
-                        <div className="space-y-6">
+                <section className="ri-container py-10 sm:py-16">
+                    <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.05fr),minmax(420px,0.95fr)]">
+                        <div className="space-y-7">
                             <div data-ri-hero-copy className="flex flex-wrap gap-2">
-                                <span className="ri-badge-accent">
-                                    Scan. Track. Save.
-                                </span>
+                                <span className="ri-badge-accent">Scan. Track. Save.</span>
                                 <span className="ri-badge">Built in Nigeria</span>
                             </div>
-                            <p data-ri-hero-copy className="ri-kicker">
-                                Expense tracking without the manual work
-                            </p>
-                            <h1 data-ri-hero-copy className="ri-h1 max-w-4xl text-5xl sm:text-6xl">
-                                AI receipt capture for freelancers and small businesses.
-                            </h1>
-                            <p data-ri-hero-copy className="ri-subtitle max-w-2xl text-base sm:text-lg">
-                                ReceiptIQ uses AI to instantly extract and log
-                                expense data from receipt photos so you can stop
-                                losing track of spending and start keeping clean,
-                                usable records.
-                            </p>
+                            <div data-ri-hero-copy className="space-y-4">
+                                <h1 className="ri-landing-title">
+                                    AI receipt capture for freelancers and small businesses.
+                                </h1>
+                                <p className="ri-landing-copy">
+                                    ReceiptIQ uses AI to instantly extract and log
+                                    expense data from receipt photos so you can
+                                    stop losing track of spending and start keeping
+                                    clean, usable records.
+                                </p>
+                            </div>
                             <div data-ri-hero-copy className="flex flex-wrap gap-3">
-                                <Link to={primaryHref} className="ri-btn-primary">
-                                    {session ? "Open dashboard" : "Get started"}
+                                <Link to={primaryHref} className="ri-action-btn ri-action-btn-primary">
+                                    <span>{session ? "Open dashboard" : "Get started"}</span>
+                                    <ArrowRight size={16} strokeWidth={1.75} />
                                 </Link>
-                                <Link to={secondaryHref} className="ri-btn-secondary">
+                                <Link to={secondaryHref} className="ri-action-btn">
                                     {session ? "Go to app" : "Sign in"}
                                 </Link>
                             </div>
@@ -116,19 +106,26 @@ export function Landing() {
                                 data-ri-hero-copy
                                 className="grid gap-4 sm:grid-cols-3"
                             >
-                                {highlights.map((item) => (
-                                    <div key={item.label} className="ri-stat">
-                                        <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
-                                            {item.label}
-                                        </p>
-                                        <p className="ri-stat-value text-2xl">
-                                            {item.value}
-                                        </p>
-                                    </div>
-                                ))}
+                                {highlights.map((item) => {
+                                    const Icon = item.icon;
+                                    return (
+                                        <div key={item.label} className="ri-panel p-5">
+                                            <div className="flex items-center gap-2 text-slate-500">
+                                                <Icon size={15} strokeWidth={1.75} />
+                                                <p className="text-xs font-medium uppercase tracking-[0.18em]">
+                                                    {item.label}
+                                                </p>
+                                            </div>
+                                            <p className="mt-4 text-lg font-semibold tracking-tight text-white">
+                                                {item.value}
+                                            </p>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
-                        <div data-ri-hero-art className="ri-surface ri-surface-pad">
+
+                        <div data-ri-hero-art className="ri-panel p-4 sm:p-5">
                             <div className="ri-hero-frame">
                                 <div className="ri-hero-orb" />
                                 <div className="ri-hero-glass-card">
@@ -142,7 +139,7 @@ export function Landing() {
                                     <img
                                         src="/hero-mosaic.svg"
                                         alt="ReceiptIQ dashboard and workflow preview"
-                                        className="w-full rounded-[1rem] border border-white/10 bg-slate-950/35 p-3"
+                                        className="w-full rounded-xl border border-white/5 bg-slate-950/40 p-3"
                                     />
                                 </div>
                                 <div className="ri-hero-caption">
@@ -156,11 +153,10 @@ export function Landing() {
                 </section>
 
                 <section className="ri-container py-8 sm:py-12">
-                    <div className="ri-page-hero">
-                        <div className="relative grid gap-8 lg:grid-cols-[0.9fr,1.1fr] lg:items-center">
+                    <div className="ri-panel p-6 sm:p-8">
+                        <div className="grid gap-8 lg:grid-cols-[0.9fr,1.1fr] lg:items-start">
                             <div className="space-y-4">
-                                <p className="ri-kicker">Why it exists</p>
-                                <h2 className="text-3xl font-bold text-white sm:text-4xl">
+                                <h2 className="text-3xl font-semibold tracking-tighter text-white sm:text-4xl">
                                     Built from a real business problem, not a trend.
                                 </h2>
                                 <p className="text-sm leading-7 text-slate-300 sm:text-base">
@@ -175,10 +171,9 @@ export function Landing() {
                                 {stories.map((story) => (
                                     <article
                                         key={story.title}
-                                        data-ri-story-card
                                         className="ri-surface-inner p-5"
                                     >
-                                        <h3 className="text-xl font-bold text-white">
+                                        <h3 className="text-xl font-semibold tracking-tight text-white">
                                             {story.title}
                                         </h3>
                                         <p className="mt-3 text-sm leading-7 text-slate-300">

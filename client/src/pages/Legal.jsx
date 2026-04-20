@@ -90,7 +90,7 @@ export function Privacy() {
             </p>
             <h2>Information we process</h2>
             <ul>
-                <li>Account details such as email address and Supabase user ID.</li>
+                <li>Account details such as email address and account identifier.</li>
                 <li>Expense records saved by the user, including receipt-related metadata.</li>
                 <li>Receipt images and extracted fields when users run the extraction workflow.</li>
                 <li>Operational logs necessary to keep the service stable and secure.</li>
@@ -111,9 +111,8 @@ export function Privacy() {
             </p>
             <h2>Storage and access control</h2>
             <p>
-                ReceiptIQ uses Supabase for authentication and data storage.
-                Expense records are designed to be protected by Row Level
-                Security policies so users only access their own data.
+                ReceiptIQ uses secure account authentication and access controls
+                so users only access data that belongs to their own account.
             </p>
             <h2>User choices</h2>
             <p>

@@ -15,8 +15,8 @@ const steps = [
         body: "Users can edit vendor, amount, category, currency, and line items before the record ever touches the database.",
     },
     {
-        title: "Supabase stores user-scoped records",
-        body: "Saved rows include the current authenticated user and are protected by Row Level Security policies in Supabase.",
+        title: "Saved records stay personal",
+        body: "Each saved expense stays tied to the signed-in account so records remain private and account-specific.",
     },
     {
         title: "The dashboard updates immediately",

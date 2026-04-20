@@ -146,191 +146,162 @@ export function UploadReceipt() {
 
     return (
         <div className="ri-page">
-            <div className="ri-page-hero">
-                <div className="relative flex flex-wrap items-end justify-between gap-4">
-                    <div>
-                        <p className="ri-kicker">Capture and review</p>
-                        <h1 className="ri-h1">Upload receipt</h1>
-                        <p className="ri-subtitle">
-                            Add an image, run extraction, sanity-check the result,
-                            then save a clean expense record.
-                        </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                        <span className="ri-badge-accent">AI assisted</span>
-                        <span className="ri-badge">Review before save</span>
-                    </div>
+            <div className="ri-page-header">
+                <div>
+                    <h1 className="ri-page-title">Upload receipt</h1>
+                    <p className="ri-page-copy">
+                        Add an image, run extraction, review the result, then
+                        save a clean expense record.
+                    </p>
                 </div>
+                <span className="ri-inline-pill">Review required</span>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-3">
-                <div className="ri-stat">
-                    <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+                <div className="ri-panel p-5">
+                    <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
                         Step 1
                     </p>
-                    <p className="mt-3 text-lg font-bold text-white">Upload image</p>
+                    <p className="mt-3 text-lg font-semibold tracking-tight text-white">
+                        Upload image
+                    </p>
                 </div>
-                <div className="ri-stat">
-                    <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+                <div className="ri-panel p-5">
+                    <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
                         Step 2
                     </p>
-                    <p className="mt-3 text-lg font-bold text-white">Extract + review</p>
+                    <p className="mt-3 text-lg font-semibold tracking-tight text-white">
+                        Extract and review
+                    </p>
                 </div>
-                <div className="ri-stat">
-                    <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+                <div className="ri-panel p-5">
+                    <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
                         Step 3
                     </p>
-                    <p className="mt-3 text-lg font-bold text-white">Save to dashboard</p>
+                    <p className="mt-3 text-lg font-semibold tracking-tight text-white">
+                        Save to dashboard
+                    </p>
                 </div>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-12">
-                <div className="lg:col-span-5">
-                    <div className="ri-surface ri-surface-pad">
-                        <div className="flex items-start justify-between gap-4">
-                            <div>
-                                <p className="ri-kicker">Receipt input</p>
-                                <h2 className="text-2xl font-bold text-white">
-                                    Receipt image
-                                </h2>
-                                <p className="mt-2 text-sm text-slate-400">
-                                    PNG, JPEG, or WebP works best for receipt extraction.
-                                </p>
-                            </div>
-                            <span className="ri-badge">Gemini extraction</span>
-                        </div>
+            <div className="grid gap-6 xl:grid-cols-[420px,minmax(0,1fr)]">
+                <div className="ri-panel p-6">
+                    <div>
+                        <h2 className="text-lg font-semibold tracking-tight text-white">
+                            Receipt image
+                        </h2>
+                        <p className="mt-2 text-sm leading-6 text-slate-400">
+                            PNG, JPEG, or WebP works best for extraction.
+                        </p>
+                    </div>
 
-                        <label className="mt-5 block">
-                            <span className="ri-label">Choose file</span>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={onFileChange}
-                                className="mt-3 block w-full text-sm text-slate-300 file:mr-4 file:rounded-full file:border-0 file:bg-white/90 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-slate-950 hover:file:bg-white"
+                    <label className="mt-6 block">
+                        <span className="ri-label">Choose file</span>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={onFileChange}
+                            className="mt-3 block w-full text-sm text-slate-300 file:mr-4 file:rounded-xl file:border-0 file:bg-white file:px-4 file:py-2 file:text-sm file:font-medium file:text-slate-950 hover:file:bg-slate-100"
+                        />
+                    </label>
+
+                    {previewUrl ? (
+                        <div className="mt-5 overflow-hidden rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                            <img
+                                src={previewUrl}
+                                alt="Receipt preview"
+                                className="h-auto w-full rounded-lg object-contain"
                             />
-                        </label>
-
-                        {previewUrl ? (
-                            <div className="mt-5 overflow-hidden rounded-[1.2rem] border border-white/10 bg-slate-950/40 p-3">
-                                <img
-                                    src={previewUrl}
-                                    alt="Receipt preview"
-                                    className="h-auto w-full rounded-[0.9rem] object-contain"
-                                />
-                            </div>
-                        ) : (
-                            <div className="mt-5 rounded-[1.2rem] border border-dashed border-white/10 bg-white/5 p-6 text-sm text-slate-400">
-                                Tip: screenshots and clear photos extract best. If you see errors, try a tighter crop.
-                            </div>
-                        )}
-
-                        {extractError ? (
-                            <div className="mt-5 rounded-[1.2rem] border border-amber-700/50 bg-amber-950/30 p-4 text-sm text-amber-100">
-                                <p className="font-medium">
-                                    Extraction could not complete
-                                </p>
-                                <p className="mt-1 opacity-90">{extractError}</p>
-                                <p className="mt-2 text-xs text-amber-200/80">
-                                    You can still fill the form manually and save the expense.
-                                </p>
-                            </div>
-                        ) : null}
-
-                        <div className="mt-5 flex flex-wrap gap-3">
-                            <button
-                                type="button"
-                                onClick={extract}
-                                disabled={extracting || !file}
-                                className="ri-btn-primary"
-                            >
-                                {extracting ? (
-                                    <>
-                                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-950 border-t-transparent" />
-                                        Extracting...
-                                    </>
-                                ) : (
-                                    "Extract receipt data"
-                                )}
-                            </button>
-                            <button
-                                type="button"
-                                onClick={resetForm}
-                                className="ri-btn-secondary"
-                                disabled={extracting || saving}
-                            >
-                                Reset
-                            </button>
                         </div>
+                    ) : (
+                        <div className="mt-5 rounded-xl border border-dashed border-white/10 bg-white/[0.02] p-6 text-sm leading-6 text-slate-400">
+                            Screenshots and clean photos work best. If extraction
+                            struggles, try a tighter crop and continue with manual
+                            edits if needed.
+                        </div>
+                    )}
+
+                    {extractError ? (
+                        <div className="mt-5 rounded-xl border border-amber-500/20 bg-amber-500/[0.08] p-4 text-sm text-amber-100">
+                            <p className="font-medium">Extraction could not complete</p>
+                            <p className="mt-1 opacity-90">{extractError}</p>
+                        </div>
+                    ) : null}
+
+                    <div className="mt-6 flex flex-wrap gap-3">
+                        <button
+                            type="button"
+                            onClick={extract}
+                            disabled={extracting || !file}
+                            className="ri-action-btn ri-action-btn-primary"
+                        >
+                            {extracting ? "Extracting..." : "Extract receipt data"}
+                        </button>
+                        <button
+                            type="button"
+                            onClick={resetForm}
+                            className="ri-action-btn"
+                            disabled={extracting || saving}
+                        >
+                            Reset
+                        </button>
                     </div>
                 </div>
 
-                <div className="lg:col-span-7">
-                    <div className="ri-surface ri-surface-pad ri-grid-accent">
-                        <div className="flex items-start justify-between gap-4">
-                            <div>
-                                <p className="ri-kicker">Final review</p>
-                                <h2 className="text-2xl font-bold text-white">
-                                    Review extracted data
-                                </h2>
-                                <p className="mt-2 text-sm text-slate-400">
-                                    Confirm the values before saving to Supabase.
-                                </p>
-                            </div>
-                            <span className="ri-badge-accent">
-                                {extractedOnce ? "Extracted" : "Review required"}
-                            </span>
-                        </div>
-
-                        <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                            <Field label="Vendor" value={form.vendor} onChange={(value) => setForm((current) => ({ ...current, vendor: value }))} />
-                            <Field label="Date" type="date" value={form.date} onChange={(value) => setForm((current) => ({ ...current, date: value }))} />
-                            <Field label="Amount" type="number" step="0.01" value={form.amount} onChange={(value) => setForm((current) => ({ ...current, amount: value }))} />
-                            <Field label="Currency" value={form.currency} onChange={(value) => setForm((current) => ({ ...current, currency: value }))} />
-                            <Field label="Category" value={form.category} onChange={(value) => setForm((current) => ({ ...current, category: value }))} />
-                            <Field label="Receipt URL (optional)" value={form.receipt_url} onChange={(value) => setForm((current) => ({ ...current, receipt_url: value }))} className="sm:col-span-2" />
-                        </div>
-
-                        <div className="mt-4">
-                            <label className="ri-label">Line items (one per line)</label>
-                            <textarea
-                                rows={5}
-                                value={form.items}
-                                onChange={(e) =>
-                                    setForm((current) => ({
-                                        ...current,
-                                        items: e.target.value,
-                                    }))
-                                }
-                                className="ri-textarea"
-                            />
-                            <p className="ri-help">
-                                Optional. Keep one item per line for cleaner records.
+                <div className="ri-panel p-6">
+                    <div className="flex items-start justify-between gap-4">
+                        <div>
+                            <h2 className="text-lg font-semibold tracking-tight text-white">
+                                Review extracted data
+                            </h2>
+                            <p className="mt-2 text-sm leading-6 text-slate-400">
+                                Confirm the values before saving the expense.
                             </p>
                         </div>
+                        <span className="ri-inline-pill">
+                            {extractedOnce ? "Ready to save" : "Manual review"}
+                        </span>
+                    </div>
 
-                        <div className="mt-6 flex flex-wrap items-center gap-3">
-                            <button
-                                type="button"
-                                onClick={saveExpense}
-                                disabled={!canSave}
-                                className="ri-btn-primary"
-                            >
-                                {saving ? (
-                                    <>
-                                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-950 border-t-transparent" />
-                                        Saving...
-                                    </>
-                                ) : (
-                                    "Save expense"
-                                )}
-                            </button>
-                            <Link to="/dashboard" className="ri-btn-secondary">
-                                Back to dashboard
-                            </Link>
-                            <span className="text-xs text-slate-500">
-                                Saved rows are protected by your Supabase user session.
-                            </span>
-                        </div>
+                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                        <Field label="Vendor" value={form.vendor} onChange={(value) => setForm((current) => ({ ...current, vendor: value }))} />
+                        <Field label="Date" type="date" value={form.date} onChange={(value) => setForm((current) => ({ ...current, date: value }))} />
+                        <Field label="Amount" type="number" step="0.01" value={form.amount} onChange={(value) => setForm((current) => ({ ...current, amount: value }))} />
+                        <Field label="Currency" value={form.currency} onChange={(value) => setForm((current) => ({ ...current, currency: value }))} />
+                        <Field label="Category" value={form.category} onChange={(value) => setForm((current) => ({ ...current, category: value }))} />
+                        <Field label="Receipt URL (optional)" value={form.receipt_url} onChange={(value) => setForm((current) => ({ ...current, receipt_url: value }))} className="sm:col-span-2" />
+                    </div>
+
+                    <div className="mt-4">
+                        <label className="ri-label">Line items (one per line)</label>
+                        <textarea
+                            rows={5}
+                            value={form.items}
+                            onChange={(e) =>
+                                setForm((current) => ({
+                                    ...current,
+                                    items: e.target.value,
+                                }))
+                            }
+                            className="ri-textarea"
+                        />
+                        <p className="ri-help">
+                            Optional. Keep one item per line for cleaner records.
+                        </p>
+                    </div>
+
+                    <div className="mt-6 flex flex-wrap items-center gap-3">
+                        <button
+                            type="button"
+                            onClick={saveExpense}
+                            disabled={!canSave}
+                            className="ri-action-btn ri-action-btn-primary"
+                        >
+                            {saving ? "Saving..." : "Save expense"}
+                        </button>
+                        <Link to="/dashboard" className="ri-action-btn">
+                            Back to dashboard
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -8,19 +8,7 @@
   color-scheme: dark;
   --ri-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --ri-font-display: var(--ri-font-sans);
-  --ri-bg: #08111f;
-  --ri-bg-soft: #0f1b32;
-  --ri-panel: rgba(11, 23, 43, 0.8);
-  --ri-panel-strong: rgba(15, 28, 50, 0.95);
-  --ri-border: rgba(154, 171, 196, 0.16);
-  --ri-border-strong: rgba(72, 204, 191, 0.28);
-  --ri-text: #eff6ff;
-  --ri-muted: #94a3b8;
-  --ri-accent: #48ccbf;
-  --ri-accent-strong: #f5b942;
-  --ri-glow: radial-gradient(circle at top, rgba(72, 204, 191, 0.24), transparent 35%),
-    radial-gradient(circle at 80% 10%, rgba(245, 185, 66, 0.16), transparent 25%),
-    linear-gradient(180deg, #08111f 0%, #0b1630 54%, #08111f 100%);
+  --ri-text: #f8fafc;
 }
 
 html {
@@ -29,7 +17,9 @@ html {
 
 body {
   min-height: 100vh;
-  background: var(--ri-glow);
+  background:
+    radial-gradient(circle at top, rgba(20, 184, 166, 0.08), transparent 28%),
+    linear-gradient(180deg, #05070b 0%, #090c12 100%);
   color: var(--ri-text);
   font-family: var(--ri-font-sans);
   -webkit-font-smoothing: antialiased;
@@ -42,10 +32,10 @@ body::before {
   inset: 0;
   z-index: -2;
   background-image:
-    linear-gradient(rgba(154, 171, 196, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(154, 171, 196, 0.05) 1px, transparent 1px);
-  background-size: 96px 96px;
-  mask-image: radial-gradient(circle at center, black 55%, transparent 100%);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 112px 112px;
+  mask-image: radial-gradient(circle at center, black 52%, transparent 100%);
   pointer-events: none;
 }
 
@@ -55,9 +45,8 @@ body::after {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(circle at 15% 20%, rgba(72, 204, 191, 0.08), transparent 18%),
-    radial-gradient(circle at 85% 15%, rgba(245, 185, 66, 0.08), transparent 16%),
-    radial-gradient(circle at 50% 85%, rgba(85, 135, 255, 0.08), transparent 22%);
+    radial-gradient(circle at 18% 18%, rgba(20, 184, 166, 0.06), transparent 18%),
+    radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.04), transparent 14%);
   pointer-events: none;
 }
 
@@ -67,7 +56,7 @@ body::after {
 
 @layer base {
   ::selection {
-    background: rgba(72, 204, 191, 0.28);
+    background: rgba(20, 184, 166, 0.28);
     color: white;
   }
 
@@ -78,11 +67,11 @@ body::after {
   h5,
   h6 {
     font-family: var(--ri-font-display);
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
   }
 
   a {
-    @apply rounded-md outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950;
+    @apply rounded-md outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#090c12];
   }
 }
 
@@ -95,11 +84,23 @@ body::after {
     @apply space-y-6;
   }
 
+  .ri-page-header {
+    @apply flex flex-wrap items-end justify-between gap-4;
+  }
+
+  .ri-page-title {
+    @apply text-3xl font-semibold tracking-tighter text-white sm:text-4xl;
+  }
+
+  .ri-page-copy {
+    @apply mt-2 max-w-2xl text-sm leading-7 text-slate-400;
+  }
+
   .ri-page-hero {
-    @apply relative overflow-hidden rounded-[2rem] border p-6 sm:p-8;
-    background: linear-gradient(145deg, rgba(11, 23, 43, 0.88), rgba(11, 23, 43, 0.68));
-    border-color: var(--ri-border);
-    box-shadow: 0 18px 56px rgba(2, 8, 23, 0.32);
+    @apply relative overflow-hidden rounded-[20px] border p-6 sm:p-8;
+    background: linear-gradient(180deg, rgba(10, 12, 18, 0.92), rgba(10, 12, 18, 0.82));
+    border-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 18px 56px rgba(2, 8, 23, 0.22);
   }
 
   .ri-page-hero::before {
@@ -107,17 +108,17 @@ body::after {
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(circle at top left, rgba(72, 204, 191, 0.18), transparent 24%),
-      radial-gradient(circle at bottom right, rgba(245, 185, 66, 0.12), transparent 22%);
+      radial-gradient(circle at top left, rgba(20, 184, 166, 0.08), transparent 24%),
+      radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.04), transparent 22%);
     pointer-events: none;
   }
 
   .ri-h1 {
-    @apply text-3xl font-bold text-white sm:text-4xl;
+    @apply text-3xl font-semibold tracking-tighter text-white sm:text-4xl;
   }
 
   .ri-subtitle {
-    @apply mt-2 max-w-2xl text-sm leading-6 text-slate-400 sm:text-base;
+    @apply mt-2 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base;
   }
 
   .ri-section-title {
@@ -125,66 +126,69 @@ body::after {
   }
 
   .ri-surface {
-    @apply rounded-[1.2rem] border shadow-[0_10px_36px_rgba(2,8,23,0.22)];
-    background: linear-gradient(180deg, rgba(13, 25, 46, 0.92), rgba(10, 19, 35, 0.85));
-    border-color: var(--ri-border);
-    backdrop-filter: blur(16px);
+    @apply rounded-[16px] border shadow-[0_8px_24px_rgba(2,8,23,0.16)];
+    background: linear-gradient(180deg, rgba(10, 12, 18, 0.9), rgba(10, 12, 18, 0.8));
+    border-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
   }
 
   .ri-surface-inner {
-    @apply rounded-[0.95rem] border;
-    background: linear-gradient(180deg, rgba(13, 25, 46, 0.72), rgba(8, 17, 31, 0.76));
-    border-color: rgba(154, 171, 196, 0.12);
+    @apply rounded-[14px] border;
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.05);
   }
 
   .ri-surface-pad {
     @apply p-6 sm:p-7;
   }
 
+  .ri-panel {
+    @apply rounded-[16px] border border-white/5 bg-white/[0.02] backdrop-blur;
+  }
+
   .ri-hero-frame {
-    @apply relative overflow-hidden rounded-[1.3rem] border p-4;
-    min-height: 520px;
-    border-color: rgba(154, 171, 196, 0.12);
+    @apply relative overflow-hidden rounded-[16px] border p-4;
+    min-height: 460px;
+    border-color: rgba(255, 255, 255, 0.05);
     background:
-      radial-gradient(circle at 18% 16%, rgba(72, 204, 191, 0.12), transparent 18%),
-      radial-gradient(circle at 82% 14%, rgba(245, 185, 66, 0.12), transparent 18%),
-      linear-gradient(180deg, rgba(7, 15, 30, 0.96), rgba(10, 19, 35, 0.86));
+      radial-gradient(circle at 18% 16%, rgba(20, 184, 166, 0.1), transparent 18%),
+      linear-gradient(180deg, rgba(8, 10, 15, 0.96), rgba(10, 12, 18, 0.9));
   }
 
   .ri-hero-orb {
     @apply pointer-events-none absolute h-44 w-44 rounded-full blur-3xl;
     left: -2rem;
     top: 2rem;
-    background: rgba(72, 204, 191, 0.16);
+    background: rgba(20, 184, 166, 0.14);
   }
 
   .ri-hero-glass-card {
-    @apply absolute left-8 top-8 flex items-center justify-center rounded-[1.2rem] border;
+    @apply absolute left-6 top-6 flex items-center justify-center rounded-[14px] border;
     width: 40%;
     height: 44%;
-    border-color: rgba(154, 171, 196, 0.12);
-    background: linear-gradient(180deg, rgba(18, 31, 57, 0.72), rgba(12, 22, 41, 0.42));
+    border-color: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(180deg, rgba(17, 24, 39, 0.72), rgba(12, 22, 41, 0.34));
     backdrop-filter: blur(14px);
-    transform: rotate(-8deg);
-    box-shadow: 0 20px 60px rgba(2, 8, 23, 0.24);
+    transform: rotate(-6deg);
+    box-shadow: 0 16px 46px rgba(2, 8, 23, 0.2);
   }
 
   .ri-hero-graphic {
     @apply max-h-[78%] w-auto object-contain opacity-95;
-    filter: drop-shadow(0 24px 50px rgba(99, 102, 241, 0.24));
+    filter: drop-shadow(0 24px 50px rgba(20, 184, 166, 0.16));
   }
 
   .ri-hero-preview {
-    @apply absolute right-5 top-7 w-[78%] rounded-[1.2rem] border p-3;
-    border-color: rgba(154, 171, 196, 0.12);
-    background: rgba(15, 28, 50, 0.72);
-    box-shadow: 0 22px 70px rgba(2, 8, 23, 0.34);
+    @apply absolute right-4 top-4 w-[78%] rounded-[14px] border p-3;
+    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(15, 23, 42, 0.56);
+    box-shadow: 0 18px 42px rgba(2, 8, 23, 0.22);
   }
 
   .ri-hero-caption {
-    @apply absolute bottom-5 left-5 right-5 grid gap-3 rounded-[1rem] border px-4 py-3 text-sm leading-6 text-slate-300 sm:grid-cols-3;
-    border-color: rgba(154, 171, 196, 0.12);
-    background: rgba(7, 15, 30, 0.68);
+    @apply absolute bottom-4 left-4 right-4 grid gap-3 rounded-[12px] border px-4 py-3 text-sm leading-6 text-slate-300 sm:grid-cols-3;
+    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(7, 15, 30, 0.58);
     backdrop-filter: blur(12px);
   }
 
@@ -199,35 +203,35 @@ body::after {
     width: 220px;
     height: 220px;
     border-radius: 9999px;
-    background: radial-gradient(circle, rgba(72, 204, 191, 0.12), transparent 65%);
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.08), transparent 65%);
     pointer-events: none;
   }
 
   .ri-btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition duration-200
-      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition duration-200
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#090c12]
       disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .ri-btn-primary {
     @apply ri-btn text-slate-950;
-    background: linear-gradient(135deg, #48ccbf, #f5b942);
-    box-shadow: 0 10px 30px rgba(72, 204, 191, 0.24);
+    background: linear-gradient(135deg, #2dd4bf, #99f6e4);
+    box-shadow: 0 8px 24px rgba(45, 212, 191, 0.18);
   }
 
   .ri-btn-primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 18px 34px rgba(72, 204, 191, 0.28);
+    box-shadow: 0 12px 28px rgba(45, 212, 191, 0.22);
   }
 
   .ri-btn-secondary {
     @apply ri-btn border text-slate-100;
-    border-color: rgba(154, 171, 196, 0.18);
-    background: rgba(15, 28, 50, 0.7);
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
   }
 
   .ri-btn-secondary:hover {
-    @apply border-teal-300/30 bg-slate-900/90;
+    @apply border-white/15 bg-white/[0.05];
   }
 
   .ri-btn-ghost {
@@ -236,28 +240,36 @@ body::after {
   }
 
   .ri-btn-ghost:hover {
-    @apply bg-slate-900/50;
+    @apply bg-white/[0.04];
+  }
+
+  .ri-action-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/5 bg-white/[0.02] px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:border-white/10 hover:bg-white/[0.04] hover:text-white disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .ri-action-btn-primary {
+    @apply border-transparent bg-teal-500 text-slate-950 hover:bg-teal-400 hover:text-slate-950;
   }
 
   .ri-btn-danger {
-    @apply ri-btn border border-red-400/30 bg-red-950/30 text-red-100;
+    @apply ri-btn border border-red-400/20 bg-red-500/[0.08] text-red-100;
   }
 
   .ri-label {
-    @apply block text-sm font-semibold tracking-wide text-slate-300;
+    @apply block text-sm font-medium tracking-wide text-slate-300;
   }
 
   .ri-input {
     @apply mt-2 w-full rounded-xl border px-4 py-3 text-sm text-slate-100 outline-none transition;
-    border-color: rgba(154, 171, 196, 0.16);
-    background: rgba(7, 15, 30, 0.9);
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.02);
   }
 
   .ri-input:focus,
   .ri-textarea:focus,
   .ri-select:focus {
-    border-color: rgba(72, 204, 191, 0.5);
-    box-shadow: 0 0 0 4px rgba(72, 204, 191, 0.12);
+    border-color: rgba(45, 212, 191, 0.5);
+    box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.1);
   }
 
   .ri-textarea {
@@ -273,22 +285,26 @@ body::after {
   }
 
   .ri-badge {
-    @apply inline-flex items-center gap-2 rounded-lg border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-300;
-    border-color: rgba(154, 171, 196, 0.14);
-    background: rgba(8, 17, 31, 0.6);
+    @apply inline-flex items-center gap-2 rounded-lg border px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-slate-300;
+    border-color: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.03);
   }
 
   .ri-badge-accent {
     @apply ri-badge text-teal-200;
-    border-color: rgba(72, 204, 191, 0.24);
-    background: rgba(72, 204, 191, 0.1);
+    border-color: rgba(45, 212, 191, 0.2);
+    background: rgba(45, 212, 191, 0.08);
+  }
+
+  .ri-inline-pill {
+    @apply inline-flex items-center rounded-lg border border-white/5 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-slate-300;
   }
 
   .ri-table-wrap {
-    @apply overflow-hidden rounded-[1rem] border;
-    border-color: var(--ri-border);
-    background: rgba(11, 23, 43, 0.78);
-    box-shadow: 0 18px 60px rgba(2, 8, 23, 0.28);
+    @apply overflow-hidden rounded-[16px] border;
+    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.02);
+    box-shadow: 0 16px 40px rgba(2, 8, 23, 0.16);
   }
 
   .ri-table {
@@ -297,20 +313,20 @@ body::after {
 
   .ri-thead {
     @apply text-slate-400;
-    background: rgba(15, 28, 50, 0.9);
+    background: rgba(255, 255, 255, 0.03);
   }
 
   .ri-th {
-    @apply px-5 py-4 text-xs font-semibold uppercase tracking-[0.18em];
+    @apply px-5 py-4 text-xs font-medium uppercase tracking-[0.18em];
   }
 
   .ri-tr {
     @apply border-t transition;
-    border-color: rgba(154, 171, 196, 0.08);
+    border-color: rgba(255, 255, 255, 0.05);
   }
 
   .ri-tr:hover {
-    background: rgba(15, 28, 50, 0.5);
+    background: rgba(255, 255, 255, 0.02);
   }
 
   .ri-td {
@@ -321,42 +337,57 @@ body::after {
     @apply ri-td text-slate-400;
   }
 
+  .ri-amount-cell {
+    @apply text-right font-medium tabular-nums text-white;
+  }
+
   .ri-callout-warn {
-    @apply rounded-[1rem] border p-5 text-amber-100;
-    border-color: rgba(245, 185, 66, 0.22);
-    background: rgba(120, 53, 15, 0.18);
+    @apply rounded-[16px] border p-5 text-amber-100;
+    border-color: rgba(245, 185, 66, 0.16);
+    background: rgba(245, 185, 66, 0.08);
   }
 
   .ri-callout-danger {
-    @apply rounded-[1rem] border p-4 text-sm text-red-100;
-    border-color: rgba(248, 113, 113, 0.26);
-    background: rgba(127, 29, 29, 0.22);
+    @apply rounded-[16px] border p-4 text-sm text-red-100;
+    border-color: rgba(248, 113, 113, 0.2);
+    background: rgba(248, 113, 113, 0.08);
   }
 
   .ri-kicker {
-    @apply text-xs font-semibold uppercase tracking-[0.28em] text-teal-200/80;
+    @apply text-xs font-medium uppercase tracking-[0.28em] text-teal-200/80;
   }
 
   .ri-stat {
-    @apply rounded-[1rem] border p-5;
-    border-color: rgba(154, 171, 196, 0.12);
-    background: rgba(10, 19, 35, 0.64);
+    @apply rounded-[16px] border p-5;
+    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.02);
   }
 
   .ri-stat-value {
     font-family: var(--ri-font-display);
-    @apply mt-3 text-3xl font-bold text-white;
+    @apply mt-3 text-3xl font-semibold tracking-tighter text-white;
   }
 
   .ri-shell {
     @apply min-h-screen;
-    background:
-      radial-gradient(circle at top, rgba(72, 204, 191, 0.14), transparent 22%),
-      linear-gradient(180deg, rgba(8, 17, 31, 0.92), rgba(5, 11, 21, 0.98));
+    background: linear-gradient(180deg, rgba(5, 7, 11, 0.98), rgba(9, 12, 18, 0.98));
   }
 
   .ri-marketing-link {
-    @apply rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/5 hover:text-white;
+    @apply rounded-xl px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/[0.03] hover:text-white;
+  }
+
+  .ri-icon-wrap {
+    @apply flex h-9 w-9 items-center justify-center rounded-xl border border-white/5 bg-white/[0.03] text-slate-300;
+  }
+
+  .ri-landing-title {
+    @apply max-w-4xl text-4xl font-semibold tracking-tighter text-white sm:text-5xl lg:text-6xl;
+    line-height: 1.02;
+  }
+
+  .ri-landing-copy {
+    @apply max-w-2xl text-base leading-8 text-slate-400;
   }
 
   .ri-legal-prose p {
@@ -364,7 +395,7 @@ body::after {
   }
 
   .ri-legal-prose h2 {
-    @apply pt-4 text-xl font-bold text-white;
+    @apply pt-4 text-xl font-semibold tracking-tight text-white;
   }
 
   .ri-legal-prose ul {
@@ -373,13 +404,13 @@ body::after {
   }
 
   .ri-legal-prose li::marker {
-    color: rgba(72, 204, 191, 0.9);
+    color: rgba(45, 212, 191, 0.9);
   }
 }
 
 @media (max-width: 1023px) {
   .ri-hero-frame {
-    min-height: 460px;
+    min-height: 400px;
   }
 
   .ri-hero-glass-card {
@@ -394,24 +425,38 @@ body::after {
 
 @media (max-width: 639px) {
   .ri-hero-frame {
-    min-height: 420px;
+    min-height: auto;
     @apply p-3;
   }
 
   .ri-hero-glass-card {
-    left: 1rem;
-    top: 1rem;
-    width: 46%;
-    height: 32%;
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 48%;
+    height: 160px;
+    margin-bottom: 0.75rem;
   }
 
   .ri-hero-preview {
-    right: 0.75rem;
-    top: 0.75rem;
-    width: 86%;
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 100%;
   }
 
   .ri-hero-caption {
-    @apply left-3 right-3 bottom-3 grid-cols-1 text-xs;
+    position: relative;
+    inset: auto;
+    @apply mt-3 grid-cols-1 text-xs;
+  }
+
+  .ri-landing-title {
+    @apply text-4xl;
+    line-height: 1.04;
+  }
+
+  .ri-landing-copy {
+    @apply text-sm leading-7;
   }
 }

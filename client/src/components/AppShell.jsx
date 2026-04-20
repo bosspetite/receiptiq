@@ -3,11 +3,15 @@ import { Navbar } from "./Navbar";
 
 export function AppShell() {
     return (
-        <div className="flex min-h-screen flex-col bg-[radial-gradient(circle_at_top,rgba(72,204,191,0.12),transparent_20%),linear-gradient(180deg,rgba(8,17,31,0.92),rgba(5,11,21,0.98))]">
-            <Navbar />
-            <main className="ri-container flex-1 py-8">
-                <Outlet />
-            </main>
+        <div className="min-h-screen bg-[#06080d] text-slate-100">
+            <div className="mx-auto flex min-h-screen w-full max-w-[1600px]">
+                <Navbar />
+                <div className="flex min-h-screen min-w-0 flex-1 flex-col">
+                    <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8 xl:px-10 xl:py-10">
+                        <Outlet />
+                    </main>
+                </div>
+            </div>
         </div>
     );
 }
