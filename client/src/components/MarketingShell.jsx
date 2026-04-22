@@ -23,8 +23,8 @@ export function MarketingShell({ children }) {
     return (
         <div className="ri-shell text-slate-100">
             <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
-                <div className="ri-container flex flex-wrap items-center justify-between gap-3 py-4">
-                    <Link to="/" className="flex min-w-0 items-center gap-3">
+                <div className="ri-container flex items-center gap-3 py-4 lg:grid lg:grid-cols-[auto,1fr,auto] lg:gap-6">
+                    <Link to="/" className="flex min-w-0 flex-1 items-center gap-3 lg:flex-none">
                         <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-teal-300/20 bg-white/5 font-display text-sm font-bold text-teal-200">
                             RQ
                         </span>
@@ -37,7 +37,7 @@ export function MarketingShell({ children }) {
                             </p>
                         </div>
                     </Link>
-                    <nav className="hidden items-center gap-1 lg:flex">
+                    <nav className="hidden min-w-0 items-center justify-center gap-1 lg:flex">
                         {navItems.map((item) => (
                             <Link
                                 key={item.to}
@@ -48,14 +48,14 @@ export function MarketingShell({ children }) {
                             </Link>
                         ))}
                     </nav>
-                    <div className="flex w-full flex-wrap items-center justify-end gap-2 sm:w-auto">
+                    <div className="ml-auto flex shrink-0 items-center justify-end gap-2">
                         <Link
                             to={secondaryHref}
                             className="ri-btn-ghost hidden sm:inline-flex"
                         >
                             {session ? "Dashboard" : "Sign in"}
                         </Link>
-                        <Link to={primaryHref} className="ri-btn-primary">
+                        <Link to={primaryHref} className="ri-btn-primary shrink-0">
                             {session ? "Open app" : "Get started"}
                         </Link>
                     </div>
