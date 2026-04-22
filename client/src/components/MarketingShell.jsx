@@ -66,7 +66,7 @@ export function MarketingShell({ children }) {
                 {children}
             </div>
 
-            <footer className="relative overflow-hidden border-t border-white/10 bg-slate-950/50 py-12">
+            <footer className="ri-marketing-footer relative overflow-hidden border-t border-white/10 bg-slate-950/50 py-12">
                 <div className="ri-container relative z-10 grid gap-8 lg:grid-cols-[1.4fr,1fr,1fr]">
                     <div className="space-y-4">
                         <p className="text-2xl font-semibold tracking-tight text-white">

@@ -389,6 +389,22 @@ body::after {
     @apply rounded-xl px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/[0.03] hover:text-white;
   }
 
+  .ri-marketing-footer::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 20px;
+    z-index: 20;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(5, 7, 11, 0),
+      rgba(5, 7, 11, 0.82) 58%,
+      rgba(5, 7, 11, 0.98)
+    );
+  }
+
   .ri-icon-wrap {
     @apply flex h-9 w-9 items-center justify-center rounded-xl border border-white/5 bg-white/[0.03] text-slate-300;
   }
