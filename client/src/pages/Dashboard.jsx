@@ -23,7 +23,6 @@ import { api } from "../services/api";
 import { formatCurrency, formatDate } from "../utils/formatCurrency";
 import { CardSkeleton, Skeleton } from "../components/Skeleton";
 import { EmptyState } from "../components/EmptyState";
-import toast from "react-hot-toast";
 
 export function Dashboard() {
     const rootRef = useRef(null);
@@ -32,7 +31,6 @@ export function Dashboard() {
     const [recent, setRecent] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [testingSheetSync, setTestingSheetSync] = useState(false);
 
     useEffect(() => {
         let cancelled = false;
@@ -88,10 +86,6 @@ export function Dashboard() {
                             summaryData?.monthlyTrend?.length
                                 ? summaryData.monthlyTrend
                                 : [],
-                        googleSheetUrl: summaryData?.googleSheetUrl || null,
-                        googleSheetSyncEnabled: Boolean(
-                            summaryData?.googleSheetSyncEnabled,
-                        ),
                     });
                     setRecent(expenses.slice(0, 6));
 
@@ -135,18 +129,6 @@ export function Dashboard() {
 
     const justSavedVendor = location.state?.savedExpense?.vendor;
 
-    async function handleTestGoogleSheetSync() {
-        setTestingSheetSync(true);
-        try {
-            const { data } = await api.post("/expenses/google-sheet/test");
-            toast.success(data?.message || "Google Sheets sync test succeeded");
-        } catch (e) {
-            toast.error(e.message || "Google Sheets sync test failed");
-        } finally {
-            setTestingSheetSync(false);
-        }
-    }
-
     const dashboardSummary = useMemo(() => {
         const totalSpend = Number(summary?.totalSpend) || 0;
         const expenseCount = Number(summary?.expenseCount) || 0;
@@ -161,8 +143,6 @@ export function Dashboard() {
             monthlyTrend,
             topCategory: byCategory[0]?.category || "None yet",
             averageSpend: expenseCount > 0 ? totalSpend / expenseCount : 0,
-            googleSheetUrl: summary?.googleSheetUrl || null,
-            googleSheetSyncEnabled: Boolean(summary?.googleSheetSyncEnabled),
         };
     }, [summary]);
 
@@ -197,8 +177,6 @@ export function Dashboard() {
         monthlyTrend,
         topCategory,
         averageSpend,
-        googleSheetUrl,
-        googleSheetSyncEnabled,
     } =
         dashboardSummary;
     const hasData = expenseCount > 0;
@@ -221,19 +199,6 @@ export function Dashboard() {
                     </p>
                 </div>
                 <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
-                    {googleSheetSyncEnabled ? (
-                        <span className="ri-inline-pill">Auto-sync active</span>
-                    ) : null}
-                    {googleSheetSyncEnabled ? (
-                        <button
-                            type="button"
-                            onClick={handleTestGoogleSheetSync}
-                            disabled={testingSheetSync}
-                            className="ri-action-btn"
-                        >
-                            <span>{testingSheetSync ? "Testing sync..." : "Test sheet sync"}</span>
-                        </button>
-                    ) : null}
                     <Link to="/upload" className="ri-action-btn ri-action-btn-primary">
                         <ReceiptText size={16} strokeWidth={1.75} />
                         <span>Upload receipt</span>
@@ -242,16 +207,6 @@ export function Dashboard() {
                         <span>View expenses</span>
                         <ArrowRight size={16} strokeWidth={1.75} />
                     </Link>
-                    {googleSheetUrl ? (
-                        <a
-                            href={googleSheetUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="ri-action-btn"
-                        >
-                            <span>Open Google Sheet</span>
-                        </a>
-                    ) : null}
                 </div>
             </div>
 
