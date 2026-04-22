@@ -21,7 +21,7 @@ export function MarketingShell({ children }) {
     const secondaryHref = session ? "/dashboard" : "/login";
 
     return (
-        <div className="ri-shell text-slate-100">
+        <div className="ri-shell isolate overflow-x-clip text-slate-100">
             <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
                 <div className="ri-container flex items-center gap-3 py-4 lg:grid lg:grid-cols-[auto,1fr,auto] lg:gap-6">
                     <Link to="/" className="flex min-w-0 flex-1 items-center gap-3 lg:flex-none">
@@ -62,10 +62,12 @@ export function MarketingShell({ children }) {
                 </div>
             </header>
 
-            {children}
+            <div className="relative z-0 overflow-x-clip">
+                {children}
+            </div>
 
-            <footer className="border-t border-white/10 bg-slate-950/50 py-12">
-                <div className="ri-container grid gap-8 lg:grid-cols-[1.4fr,1fr,1fr]">
+            <footer className="relative overflow-hidden border-t border-white/10 bg-slate-950/50 py-12">
+                <div className="ri-container relative z-10 grid gap-8 lg:grid-cols-[1.4fr,1fr,1fr]">
                     <div className="space-y-4">
                         <p className="text-2xl font-semibold tracking-tight text-white">
                             ReceiptIQ
