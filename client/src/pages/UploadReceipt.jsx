@@ -181,7 +181,7 @@ export function UploadReceipt() {
                 </div>
             </div>
 
-            <div className="grid gap-6 xl:grid-cols-[420px,minmax(0,1fr)]">
+            <div className="grid gap-6 lg:grid-cols-[minmax(320px,420px),minmax(0,1fr)]">
                 <div className="ri-panel p-6">
                     <div>
                         <h2 className="text-lg font-semibold tracking-tight text-white">
@@ -225,7 +225,7 @@ export function UploadReceipt() {
                         </div>
                     ) : null}
 
-                    <div className="mt-6 flex flex-wrap gap-3">
+                    <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                         <button
                             type="button"
                             onClick={extract}
@@ -288,7 +288,7 @@ export function UploadReceipt() {
                         </p>
                     </div>
 
-                    <div className="mt-6 flex flex-wrap items-center gap-3">
+                    <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                         <button
                             type="button"
                             onClick={saveExpense}

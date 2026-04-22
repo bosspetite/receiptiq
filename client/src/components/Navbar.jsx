@@ -29,15 +29,15 @@ function navItemClass(isActive) {
 
 function BrandMark() {
     return (
-        <NavLink to="/" className="flex items-center gap-3">
+        <NavLink to="/" className="flex min-w-0 items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-sm font-semibold text-white">
                 RQ
             </span>
-            <div>
-                <span className="block text-sm font-semibold tracking-tight text-white">
+            <div className="min-w-0">
+                <span className="block truncate text-sm font-semibold tracking-tight text-white">
                     ReceiptIQ
                 </span>
-                <span className="block text-xs text-slate-500">
+                <span className="hidden text-xs text-slate-500 sm:block">
                     Scan. Track. Save.
                 </span>
             </div>
@@ -123,7 +123,7 @@ export function Navbar() {
                 </div>
             </aside>
 
-            <header className="sticky top-0 z-30 border-b border-white/5 bg-[#090c12]/90 backdrop-blur xl:hidden">
+            <header className="sticky top-0 z-30 w-full border-b border-white/5 bg-[#090c12]/90 backdrop-blur xl:hidden">
                 <div className="flex items-center justify-between px-4 py-3">
                     <BrandMark />
                     <button

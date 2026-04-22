@@ -23,16 +23,16 @@ export function MarketingShell({ children }) {
     return (
         <div className="ri-shell text-slate-100">
             <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
-                <div className="ri-container flex items-center justify-between py-4">
-                    <Link to="/" className="flex items-center gap-3">
+                <div className="ri-container flex flex-wrap items-center justify-between gap-3 py-4">
+                    <Link to="/" className="flex min-w-0 items-center gap-3">
                         <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-teal-300/20 bg-white/5 font-display text-sm font-bold text-teal-200">
                             RQ
                         </span>
-                        <div>
-                            <p className="font-display text-lg font-bold text-white">
+                        <div className="min-w-0">
+                            <p className="truncate font-display text-lg font-bold text-white">
                                 ReceiptIQ
                             </p>
-                            <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
+                            <p className="hidden text-xs uppercase tracking-[0.24em] text-slate-500 sm:block">
                                 Expense intelligence
                             </p>
                         </div>
@@ -48,7 +48,7 @@ export function MarketingShell({ children }) {
                             </Link>
                         ))}
                     </nav>
-                    <div className="flex items-center gap-2">
+                    <div className="flex w-full flex-wrap items-center justify-end gap-2 sm:w-auto">
                         <Link
                             to={secondaryHref}
                             className="ri-btn-ghost hidden sm:inline-flex"

@@ -73,7 +73,7 @@ export function HowItWorks() {
                     {steps.map((step) => {
                         const Icon = step.icon;
                         return (
-                        <article key={step.title} className="ri-surface ri-surface-pad flex flex-col gap-4 md:flex-row md:items-start">
+                        <article key={step.title} className="ri-surface ri-surface-pad flex flex-col gap-4 sm:flex-row sm:items-start">
                             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-teal-200">
                                 <Icon size={20} strokeWidth={1.75} />
                             </div>

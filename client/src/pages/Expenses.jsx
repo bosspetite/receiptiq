@@ -178,7 +178,7 @@ export function Expenses() {
                         your account.
                     </p>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
                     <button
                         type="button"
                         onClick={exportCsv}
@@ -196,7 +196,7 @@ export function Expenses() {
 
             <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr),280px]">
                 <section className="ri-panel p-5">
-                    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr),220px] lg:items-end">
+                    <div className="grid gap-4 md:grid-cols-[minmax(0,1fr),220px] md:items-end">
                         <div className="space-y-4">
                             <label className="ri-label" htmlFor="expense-search">
                                 Search

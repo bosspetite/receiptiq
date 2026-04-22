@@ -74,7 +74,7 @@ export function Landing() {
         <MarketingShell>
             <main ref={rootRef}>
                 <section className="ri-container py-10 sm:py-16">
-                    <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.05fr),minmax(420px,0.95fr)]">
+                    <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.05fr),minmax(420px,0.95fr)] lg:gap-10">
                         <div className="space-y-7">
                             <div data-ri-hero-copy className="flex flex-wrap gap-2">
                                 <span className="ri-badge-accent">Scan. Track. Save.</span>
@@ -102,7 +102,7 @@ export function Landing() {
                             </div>
                             <div
                                 data-ri-hero-copy
-                                className="grid gap-4 sm:grid-cols-3"
+                                className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
                             >
                                 {highlights.map((item) => {
                                     const Icon = item.icon;
@@ -168,7 +168,7 @@ export function Landing() {
                                     process was too manual.
                                 </p>
                             </div>
-                            <div className="grid gap-4 md:grid-cols-3">
+                            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                                 {stories.map((story) => (
                                     <article
                                         key={story.title}

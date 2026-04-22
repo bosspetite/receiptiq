@@ -220,7 +220,7 @@ export function Dashboard() {
                         your money is going.
                     </p>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
                     {googleSheetSyncEnabled ? (
                         <span className="ri-inline-pill">Auto-sync active</span>
                     ) : null}
@@ -267,7 +267,7 @@ export function Dashboard() {
                 />
             ) : (
                 <>
-                    <div className="grid gap-4 xl:grid-cols-3">
+                    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                         <section data-ri-card className="ri-panel p-5">
                             <div className="flex items-start justify-between gap-4">
                                 <div>
@@ -340,7 +340,7 @@ export function Dashboard() {
                                 {byCategory.length} categories
                             </span>
                         </div>
-                        <div className="mt-6 grid gap-4 xl:grid-cols-2">
+                        <div className="mt-6 grid gap-4 md:grid-cols-2">
                             <div className="space-y-3">
                                 {byCategory.slice(0, 5).map((entry) => (
                                     <div key={entry.category} className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
